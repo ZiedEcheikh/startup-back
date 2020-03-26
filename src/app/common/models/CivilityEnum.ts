@@ -1,0 +1,4 @@
+enum CivilityEnum {
+    MONSIEUR,
+    MADAME
+}
