@@ -1,0 +1,11 @@
+{
+  "/start/*": {
+    "target": "http://localhost:8383/start",
+    "secure": false,
+    "pathRewrite": {
+      "^/start/*": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

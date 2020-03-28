@@ -1,5 +1,5 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
 <div class="login-body" [ngClass]="{'layout-dark': dark, 'layout-light': !dark}">
-
     <div class="login-content">
         <div class="night-switch">
             <p-button styleClass="dark-switch"  icon="pi pi-circle-on" (click)="dark = true"></p-button>
@@ -7,6 +7,7 @@
         </div>
         <div class="login-panel">
             <div class="login-panel-content">
+                <div> <p-messages [(value)]="msgs"></p-messages></div>
                 <div class="logo">
                     <img src="assets/layout/images/logo-mirage@2x.png" alt="mirage-layout" />
                 </div>
@@ -14,18 +15,36 @@
                 <div class="forms">
                     <div class="login-input-wrapper">
                         <label for="username">Identifiant</label>
-                        <input type="text" id="identifiant" pInputText  />
-                        <i class="pi pi-user"></i>
+                        <input type="text"
+                        ngModel
+                        name="identifiant"
+                        required
+                        #identifiantCtrl="ngModel"
+                        id="identifiant" pInputText  />
+                        <i class="pi pi-user"  >
+                        </i> 
                     </div>
-
+                    <div>
+                        <p-message *ngIf="!identifiantCtrl.valid && identifiantCtrl.touched" severity="error" text="Identifiant obligatoire"></p-message>
+                    </div>
                     <div class="login-input-wrapper">
                         <label for="password">Mote de passe</label>
-                        <input type="password" id="password" pPassword [feedback]="false"/>
-                        <i class="pi pi-lock"></i>
+                        <input type="password"
+                        ngModel
+                        name="password"
+                        required
+                        #passwordCtrl="ngModel"
+                        id="password" pPassword [feedback]="false"/>
+                        <i class="pi pi-lock">
+                        </i>
                     </div>
-
+                    <div>
+                        <p-message severity="error" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" text="Mot de passe obligatoire"></p-message>
+                    </div>
                     <div class="buttons">
-                        <button pButton type="button" [routerLink]="['/']" label="Se connecter"></button>
+                        <button pButton      
+                        type="submit"
+                        [disabled]="!f.valid" label="Se connecter"></button>
                     </div>
                 </div>
             </div>
@@ -34,3 +53,4 @@
         <div class="desert"></div>
     </div>
 </div>
+</form>

@@ -1,5 +1,6 @@
-import {Component, Renderer2} from '@angular/core';
+import {Component, Renderer2, OnInit} from '@angular/core';
 import { MenuService } from '../theme/menu/app.menu.service';
+import {LoadingService} from '../theme/loading/app.loading.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -17,7 +18,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         ])
     ]
 })
-export class AppAdministratorComponent {
+export class AppAdministratorComponent implements OnInit {
 
     horizontalMenu: boolean;
 
@@ -65,7 +66,10 @@ export class AppAdministratorComponent {
 
     menuHoverActive: boolean;
 
-    constructor(public renderer: Renderer2, private menuService: MenuService) {}
+    constructor(public renderer: Renderer2, private menuService: MenuService, private loadingService: LoadingService) {}
+    ngOnInit(): void {
+        setTimeout(() =>  this.loadingService.dismiss(), 2000);
+    }
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
