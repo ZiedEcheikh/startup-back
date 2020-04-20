@@ -1,21 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-
+import { MaterialModule } from '../common/tools/material.module';
 import { AppAdministratorRoutingModule } from './app.administrator.routing.module';
-import {TabViewModule} from 'primeng/tabview';
-// PrimeNG Components for demos
-import {CalendarModule} from 'primeng/calendar';
 
 // Application Components
 import { AppAdministratorComponent } from './app.administrator.component';
 import { AppDashboardComponent } from './dashboard/app.dashboard.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import {AppRightPanelComponent} from '../theme/rightpanel/app.rightpanel.component';
-
-import {CheckboxModule} from 'primeng/checkbox';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
-
 import {AppMenuComponent} from '../theme/menu/app.menu.component';
 import {AppMenuitemComponent} from '../theme/menu/app.menuitem.component';
 import {AppTopBarComponent} from '../theme/topbar/app.topbar.component';
@@ -31,7 +24,6 @@ import {MenuService} from '../theme/menu/app.menu.service';
   declarations: [
     AppAdministratorComponent,
     AppDashboardComponent,
-    WelcomeComponent,
     AppMenuComponent,
     AppMenuitemComponent,
     AppTopBarComponent,
@@ -41,11 +33,9 @@ import {MenuService} from '../theme/menu/app.menu.service';
     AppConfigComponent],
   imports: [
     CommonModule,
+    FormsModule,
     AppAdministratorRoutingModule,
-    CalendarModule,
-    CheckboxModule,
-    TabViewModule,
-    BreadcrumbModule
+    MaterialModule
   ],
   providers: [
     BreadcrumbService, MenuService

@@ -1,0 +1,93 @@
+<div class="p-grid ui-fluid">
+  <div class="p-col-12 p-lg-12">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card">
+          <div class="p-grid form-group">
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <input type="text" pInputText placeholder="Nom de la vente" autocomplete="off" />
+            </div>
+
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <p-toggleButton onLabel="Vente active" offLabel="Vente désactive" onIcon="pi pi-check"
+                offIcon="pi pi-times" [(ngModel)]="saleStat"></p-toggleButton>
+            </div>
+          </div>
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date début de vente"
+                [minDate]="yesterday"></p-calendar>
+            </div>
+
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date fin de vente"
+                [minDate]="yesterday"></p-calendar>
+            </div>
+          </div>
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <p-dropdown [options]="categories" [(ngModel)]="selectedCetegory" [filter]="true" filterBy="value.name"
+                optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <p-dropdown [options]="categories" [(ngModel)]="selectedCetegory" [filter]="true" filterBy="value.name"
+                optionLabel="name"></p-dropdown>
+            </div>
+          </div>
+
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <textarea [rows]="3" [cols]="30" pInputTextarea placeholder="Descritption"
+                autoResize="autoResize"></textarea>
+            </div>
+
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+
+            </div>
+          </div>
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-3 p-md-3">
+            </div>
+
+            <div class="p-col-6 p-md-6">
+              <button type="button" label="Suivant" pButton icon="pi pi-check"></button>
+            </div>
+
+            <div class="p-col-3 p-md-3">
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,11 +9,17 @@ export class AppMenuComponent implements OnInit {
 
     model: any[];
 
-    constructor(public app: AppAdministratorComponent) {}
+    constructor(public app: AppAdministratorComponent) { }
 
     ngOnInit() {
         this.model = [
-            {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/administrator/dashboard']}
+            { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/administrator/dashboard'] },
+            {
+                label: 'Paramétrage', icon: 'pi pi-fw pi-star', routerLink: ['/administrator/market'],
+                items: [
+                    { label: 'Ventes', icon: 'pi pi-fw pi-th-large', routerLink: ['/administrator/market/sale-add'] }
+                ]
+            }
         ];
     }
 
