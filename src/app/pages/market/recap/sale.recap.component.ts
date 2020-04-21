@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { StepService } from '../_service/StepService';
 
 @Component({
@@ -8,9 +8,14 @@ import { StepService } from '../_service/StepService';
   styleUrls: ['./sale.recap.component.scss']
 })
 export class SaleRecapComponent implements OnInit {
-
+  items: MenuItem[];
   constructor(private stepService: StepService) {
-
+    this.items = [
+      { label: 'Vente' },
+      { label: 'Affiche' },
+      { label: 'Détails' },
+      { label: 'Récap' }
+    ];
   }
 
   ngOnInit() {

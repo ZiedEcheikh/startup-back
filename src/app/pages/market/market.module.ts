@@ -11,12 +11,13 @@ import { SaleAddComponent } from './sale/sale.add.component';
 import { PosterUploadComponent } from './poster/poster.upload.component';
 import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleRecapComponent } from './recap/sale.recap.component';
+import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
 
 import { StepService } from './_service';
 
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
-    SaleDetailsComponent, SaleRecapComponent],
+    SaleDetailsComponent, SaleRecapComponent, SaleDetailsManageComponent],
   imports: [
     CommonModule,
     FormsModule,

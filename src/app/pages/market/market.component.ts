@@ -12,9 +12,8 @@ export class MarketComponent {
 
   items: MenuItem[];
   subscription: Subscription;
-  activeStep: number = 0;
 
-  constructor(private stepService: StepService) {
+  constructor() {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
@@ -22,9 +21,6 @@ export class MarketComponent {
       { label: 'Récap' }
     ];
 
-    this.subscription = stepService.stepHandler.subscribe(response => {
-      this.activeStep = response;
-    });
   }
 }
 

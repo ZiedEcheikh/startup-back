@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { MenuItem } from 'primeng/api';
+
 import { StepService } from '../_service/StepService';
 
 import { Category } from '../_models';
@@ -10,10 +12,19 @@ import { Category } from '../_models';
   styleUrls: ['./sale.add.component.scss']
 })
 export class SaleAddComponent implements OnInit {
+  items: MenuItem[];
   categories: Category[];
   selectedCetegory: Category;
   saleStat: boolean;
   constructor(private stepService: StepService) {
+
+    this.items = [
+      { label: 'Vente' },
+      { label: 'Affiche' },
+      { label: 'Détails' },
+      { label: 'Récap' }
+    ];
+    
     this.categories = [
       { name: 'Selectionné une catégorie', code: null },
       { name: 'Mode', code: 'NY' },
