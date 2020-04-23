@@ -1,25 +1,21 @@
 ::ng-deep .block-marge {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
-::ng-deep .ui-steps-item {
-  width: 25%;
+::ng-deep .ui-steps-item{
+    width: 25%;
 }
 
 ::ng-deep .titel-steps {
-  text-align: center;
+    text-align: center;
+    
 }
 
 ::ng-deep .card h1 {
-  font-size: 18px;
-  font-weight: bolder;
-  margin: 18px 0;
+    font-size: 18px;
+    font-weight: bolder;
+    margin: 18px 0;
 }
-
-::ng-deep .choice-btn {
-  width: 100%;
-}
-
 /**::ng-deep .ui-steps ul > :nth-child(3) > .ui-menuitem-link .ui-steps-number{
     display: inline-block;
     background-color: #5E81AC;

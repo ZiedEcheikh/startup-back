@@ -12,9 +12,10 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { FileUploadModule } from 'primeng/fileupload';
 import { StepsModule } from 'primeng/steps';
 import { TreeModule } from 'primeng/tree';
-import { DialogModule } from 'primeng/dialog';
-import {SelectButtonModule} from 'primeng/selectbutton';
-
+import { TableModule } from 'primeng/table';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { LightboxModule } from 'primeng/lightbox';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
   CalendarModule,
@@ -27,8 +28,10 @@ const PRIME_THEME_COMPONENTS = [
   FileUploadModule,
   StepsModule,
   TreeModule,
-  DialogModule,
-  SelectButtonModule
+  ContextMenuModule,
+  TableModule,
+  LightboxModule,
+  OverlayPanelModule
 ];
 
 @NgModule({

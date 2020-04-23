@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { StepService } from '../_service/StepService';
+
 @Component({
   selector: 'app-sale',
   templateUrl: './poster.upload.component.html',
@@ -8,7 +8,7 @@ import { StepService } from '../_service/StepService';
 })
 export class PosterUploadComponent implements OnInit {
   items: MenuItem[];
-  constructor(private stepService: StepService) {
+  constructor() {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
@@ -18,7 +18,6 @@ export class PosterUploadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stepService.changeStep(1);
   }
 
 

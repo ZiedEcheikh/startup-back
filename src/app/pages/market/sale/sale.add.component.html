@@ -25,20 +25,21 @@
   <div class="p-col-12 p-lg-12">
     <div class="p-grid">
       <div class="p-col-12">
-        <div class="card">
+        <div class="card card-w-title">
+          <h1>La vente</h1>
           <div class="p-grid form-group">
             <div class="p-col-1 p-md-1">
             </div>
 
             <div class="p-col-5 p-md-5">
-              <input type="text" pInputText placeholder="Nom de la vente" autocomplete="off" />
+              <input type="text" pInputText placeholder="Nom *" autocomplete="off" />
             </div>
 
             <div class="p-col-1 p-md-1">
             </div>
 
             <div class="p-col-5 p-md-5">
-              <p-toggleButton onLabel="Vente active" offLabel="Vente désactive" onIcon="pi pi-check"
+              <p-toggleButton onLabel="Active" offLabel="Désactive" onIcon="pi pi-check"
                 offIcon="pi pi-times" [(ngModel)]="saleStat"></p-toggleButton>
             </div>
           </div>
@@ -47,7 +48,7 @@
             </div>
 
             <div class="p-col-5 p-md-5">
-              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date début de vente"
+              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date début *"
                 [minDate]="yesterday"></p-calendar>
             </div>
 
@@ -55,7 +56,7 @@
             </div>
 
             <div class="p-col-5 p-md-5">
-              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date fin de vente"
+              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date fin *"
                 [minDate]="yesterday"></p-calendar>
             </div>
           </div>
@@ -71,7 +72,7 @@
 
             <div class="p-col-1 p-md-1">
             </div>
-
+ 
             <div class="p-col-5 p-md-5">
               <p-dropdown [options]="categories" [(ngModel)]="selectedCetegory" [filter]="true" filterBy="value.name"
                 optionLabel="name"></p-dropdown>

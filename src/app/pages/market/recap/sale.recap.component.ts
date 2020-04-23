@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { StepService } from '../_service/StepService';
 
 @Component({
   selector: 'app-sale',
@@ -9,7 +8,7 @@ import { StepService } from '../_service/StepService';
 })
 export class SaleRecapComponent implements OnInit {
   items: MenuItem[];
-  constructor(private stepService: StepService) {
+  constructor() {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
@@ -19,7 +18,6 @@ export class SaleRecapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stepService.changeStep(3);
   }
 
 }

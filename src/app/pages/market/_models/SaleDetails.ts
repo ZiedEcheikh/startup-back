@@ -1,6 +1,7 @@
 export class SaleDetails  {
     id?: number;
     label?: string;
+    descritpion?: string;
     data?: any;
     icon?: any;
     expandedIcon?: any;

@@ -25,35 +25,62 @@
     <div class="p-grid">
       <div class="p-col-12">
         <div class="card card-w-title">
-          <h1>Ajout Element</h1>
+          <h1>Produit</h1>
           <div class="p-grid form-group block-marge">
-            <div class="p-col-3 p-md-3">
+            <div class="p-col-1 p-md-1">
             </div>
 
-            <div class="p-col-6 p-md-6">
+            <div class="p-col-5 p-md-5">
               <input type="text" pInputText placeholder="Nom *" autocomplete="off" />
             </div>
 
-            <div class="p-col-3 p-md-3">
+            <div class="p-col-1 p-md-1">
             </div>
 
+            <div class="p-col-5 p-md-5">
+              <textarea [rows]="3" [cols]="30" pInputTextarea placeholder="Descritption *"
+                autoResize="autoResize"></textarea>
+            </div>
           </div>
 
 
           <div class="p-grid form-group block-marge">
-            <div class="p-col-3 p-md-3">
+            <div class="p-col-1 p-md-1">
             </div>
 
-            <div class="p-col-6 p-md-6">
-              <textarea [rows]="3" [cols]="30" pInputTextarea placeholder="Descritption"
-                autoResize="autoResize"></textarea>
+            <div class="p-col-5 p-md-5">
+              <input type="text" pInputText placeholder="Ancien prix" autocomplete="off" />
             </div>
 
-            <div class="p-col-3 p-md-3">
+            <div class="p-col-1 p-md-1">
+            </div>
+
+            <div class="p-col-5 p-md-5">
+              <input type="text" pInputText placeholder="Nouveau prix" autocomplete="off" />
+            </div>
+          </div>
+
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-2 p-md-2">
+            </div>
+
+            <div class="p-col-8 p-md-8">
+              <p-fileUpload name="demo[]" chooseLabel="Choisir" uploadLabel="Télécharger" cancelLabel="Annuler"
+                url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple" accept="image/*"
+                maxFileSize="1000000">
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
+            </div>
+
+            <div class="p-col-2 p-md-2">
             </div>
 
           </div>
-
         </div>
       </div>
     </div>
@@ -71,8 +98,8 @@
             </div>
 
             <div class="p-col-6 p-md-6">
-              <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="currentDetails" [paginator]="true"
-                [rows]="5" dataKey="descritpion" selectionMode="single" [(selection)]="selectedDetails">
+              <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="currentProducts" [paginator]="true"
+                [rows]="5" dataKey="label" selectionMode="single" [(selection)]="selectedProduct">
                 <ng-template pTemplate="caption">
                   <div class="ui-table-globalfilter-container">
                     <input type="text" pInputText size="50" placeholder="Global Filter"
@@ -106,10 +133,14 @@
 
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
-                    <td>{{rowData.label}}</td>
+
+                    <td (click)="showProduct($event,op3)">{{rowData.label}}</td>
                     <td>{{rowData.descritpion}}</td>
+                    <td>{{rowData.oldPrice}}</td>
+                    <td>{{rowData.newPrice}}</td>
                     <td>
-                      <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"  style="margin-right: .5em"></button>
+                      <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
+                        style="margin-right: .5em"></button>
                       <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
                     </td>
                   </tr>
@@ -117,6 +148,11 @@
               </p-table>
             </div>
 
+            
+            <p-overlayPanel [baseZIndex]="9999999" #op3>
+              <p-lightbox [images]="images"></p-lightbox>
+            </p-overlayPanel>
+            
             <div class="p-col-3 p-md-3">
             </div>
 

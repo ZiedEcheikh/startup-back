@@ -12,12 +12,15 @@ import { PosterUploadComponent } from './poster/poster.upload.component';
 import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleRecapComponent } from './recap/sale.recap.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
+import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 
-import { StepService } from './_service';
+/*Services*/
+import { SaleService, SaleDetailsService, SaleProductService } from './_service';
 
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
-    SaleDetailsComponent, SaleRecapComponent, SaleDetailsManageComponent],
+    SaleDetailsComponent, SaleRecapComponent,
+    SaleDetailsManageComponent, SaleProductsManageComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,7 +28,9 @@ import { StepService } from './_service';
     MaterialModule
   ],
   providers: [
-    StepService
+    SaleService,
+    SaleDetailsService,
+    SaleProductService
   ]
 })
 export class MarketModule { }
