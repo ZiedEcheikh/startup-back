@@ -16,6 +16,10 @@ import { TableModule } from 'primeng/table';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { LightboxModule } from 'primeng/lightbox';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PanelModule } from 'primeng/panel';
+import { MessageModule } from 'primeng/message';
+
+
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
   CalendarModule,
@@ -31,7 +35,9 @@ const PRIME_THEME_COMPONENTS = [
   ContextMenuModule,
   TableModule,
   LightboxModule,
-  OverlayPanelModule
+  OverlayPanelModule,
+  PanelModule,
+  MessageModule
 ];
 
 @NgModule({

@@ -27,88 +27,108 @@
       <div class="p-col-12">
         <div class="card card-w-title">
           <h1>La vente</h1>
-          <div class="p-grid form-group">
-            <div class="p-col-1 p-md-1">
-            </div>
+          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div class="forms">
+              <div class="p-grid form-group">
+                <div class="p-col-1 p-md-1">
+                </div>
 
-            <div class="p-col-5 p-md-5">
-              <input type="text" pInputText placeholder="Nom *" autocomplete="off" />
-            </div>
+                <div class="p-col-5 p-md-5">
+                  <input type="text" pInputText placeholder="Libellé *" autocomplete="off" ngModel name="label" required
+                    #labelCtrl="ngModel" />
 
-            <div class="p-col-1 p-md-1">
-            </div>
+                  <p-message *ngIf="!labelCtrl.valid && labelCtrl.touched" severity="error" text="Libellé obligatoire">
+                  </p-message>
+                </div>
 
-            <div class="p-col-5 p-md-5">
-              <p-toggleButton onLabel="Active" offLabel="Désactive" onIcon="pi pi-check"
-                offIcon="pi pi-times" [(ngModel)]="saleStat"></p-toggleButton>
-            </div>
-          </div>
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-1 p-md-1">
-            </div>
+                <div class="p-col-1 p-md-1">
+                </div>
 
-            <div class="p-col-5 p-md-5">
-              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date début *"
-                [minDate]="yesterday"></p-calendar>
+                <div class="p-col-5 p-md-5">
+                  <p-toggleButton onLabel="Active" offLabel="Désactive" onIcon="pi pi-check" offIcon="pi pi-times"
+                    #saleStatCtrl="ngModel"  [(ngModel)]="saleStat" name="saleStat"></p-toggleButton>
+                </div>
+              </div>
+              <div class="p-grid form-group block-marge">
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+                  <p-calendar id="datetimebegin" dateFormat="yy-mm-dd" showTime="true" placeholder="Date début *"
+                    [minDate]="currentDateTime" ngModel #beginDateCtrl="ngModel" name="beginDate" required>
+                  </p-calendar>
+                  <p-message *ngIf="!beginDateCtrl.valid && beginDateCtrl.touched" severity="error"
+                    text="Date début obligatoire"></p-message>
+                </div>
+
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+                  <p-calendar id="datetimeend" dateFormat="yy-mm-dd" showTime="true" [disabled]="!beginDateCtrl.valid"
+                    placeholder="Date fin *" [minDate]="beginDateCtrl.value" ngModel #endDateCtrl="ngModel"
+                    name="endDate" required></p-calendar>
+                  <p-message *ngIf="!endDateCtrl.valid && endDateCtrl.touched" severity="error"
+                    text="Date fin obligatoire"></p-message>
+                </div>
+              </div>
+
+              <div class="p-grid form-group block-marge">
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+                  <p-dropdown [options]="categories" [filter]="true"
+                    [(ngModel)]="selectedCetegory" placeholder="Selectionné une catégorie *" #categorieCtrl="ngModel"
+                    #categorieCtrl filterBy="value.label" optionLabel="label" name="category" required></p-dropdown>
+
+                  <p-message *ngIf="!categorieCtrl.valid && categorieCtrl.touched" severity="error"
+                    text="Catégorie obligatoire"></p-message>
+                </div>
+
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+                  <p-dropdown [options]="selectedCetegory?.subCategories"   [(ngModel)]="selectedSubCetegory"  [filter]="true"
+                    placeholder="Selectionné une sous catégorie" [disabled]="!categorieCtrl.valid"
+                    #sousCategorieCtrl="ngModel" #sousCategorieCtrl filterBy="value.label" name="subCategory"
+                    optionLabel="label"></p-dropdown>
+                </div>
+              </div>
+
+
+              <div class="p-grid form-group block-marge">
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+                  <textarea [rows]="3" [cols]="30" ngModel pInputTextarea placeholder="Descritption"
+                    #decriptionCtrl="ngModel" #decriptionCtrl autoResize="autoResize" name="descritption"></textarea>
+                </div>
+
+                <div class="p-col-1 p-md-1">
+                </div>
+
+                <div class="p-col-5 p-md-5">
+
+                </div>
+              </div>
+
+              <div class="p-grid form-group block-marge">
+                <div class="p-col-3 p-md-3">
+                </div>
+
+                <div class="p-col-6 p-md-6">
+                  <button type="submit" [disabled]="!f.valid" label="Suivant" pButton icon="pi pi-check"></button>
+                </div>
+
+                <div class="p-col-3 p-md-3">
+                </div>
+
+              </div>
             </div>
-
-            <div class="p-col-1 p-md-1">
-            </div>
-
-            <div class="p-col-5 p-md-5">
-              <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true" placeholder="Date fin *"
-                [minDate]="yesterday"></p-calendar>
-            </div>
-          </div>
-
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-1 p-md-1">
-            </div>
-
-            <div class="p-col-5 p-md-5">
-              <p-dropdown [options]="categories" [(ngModel)]="selectedCetegory" [filter]="true" filterBy="value.name"
-                optionLabel="name"></p-dropdown>
-            </div>
-
-            <div class="p-col-1 p-md-1">
-            </div>
- 
-            <div class="p-col-5 p-md-5">
-              <p-dropdown [options]="categories" [(ngModel)]="selectedCetegory" [filter]="true" filterBy="value.name"
-                optionLabel="name"></p-dropdown>
-            </div>
-          </div>
-
-
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-1 p-md-1">
-            </div>
-
-            <div class="p-col-5 p-md-5">
-              <textarea [rows]="3" [cols]="30" pInputTextarea placeholder="Descritption"
-                autoResize="autoResize"></textarea>
-            </div>
-
-            <div class="p-col-1 p-md-1">
-            </div>
-
-            <div class="p-col-5 p-md-5">
-
-            </div>
-          </div>
-
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-3 p-md-3">
-            </div>
-
-            <div class="p-col-6 p-md-6">
-              <button type="button" label="Suivant" pButton icon="pi pi-check"></button>
-            </div>
-
-            <div class="p-col-3 p-md-3">
-            </div>
-
-          </div>
+          </form>
 
         </div>
       </div>

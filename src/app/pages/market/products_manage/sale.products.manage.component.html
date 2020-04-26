@@ -49,38 +49,40 @@
             </div>
 
             <div class="p-col-5 p-md-5">
-              <input type="text" pInputText placeholder="Ancien prix" autocomplete="off" />
+              <input type="text" pInputText placeholder="Ancien prix *" autocomplete="off" />
             </div>
 
             <div class="p-col-1 p-md-1">
             </div>
 
             <div class="p-col-5 p-md-5">
-              <input type="text" pInputText placeholder="Nouveau prix" autocomplete="off" />
+              <input type="text" pInputText placeholder="Nouveau prix *" autocomplete="off" />
             </div>
           </div>
 
+          <div class="card card-w-title">
+            <h1>Photos</h1>
+            <div class="p-grid form-group block-marge">
+              <div class="p-col-2 p-md-2">
+              </div>
 
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-2 p-md-2">
+              <div class="p-col-8 p-md-8">
+                <p-fileUpload name="demo[]" chooseLabel="Choisir" uploadLabel="Télécharger" cancelLabel="Annuler"
+                  url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple" accept="image/*"
+                  maxFileSize="1000000">
+                  <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
+
+              <div class="p-col-2 p-md-2">
+              </div>
             </div>
-
-            <div class="p-col-8 p-md-8">
-              <p-fileUpload name="demo[]" chooseLabel="Choisir" uploadLabel="Télécharger" cancelLabel="Annuler"
-                url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple" accept="image/*"
-                maxFileSize="1000000">
-                <ng-template pTemplate="content">
-                  <ul *ngIf="uploadedFiles.length">
-                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                  </ul>
-                </ng-template>
-              </p-fileUpload>
-            </div>
-
-            <div class="p-col-2 p-md-2">
-            </div>
-
           </div>
+
         </div>
       </div>
     </div>
@@ -125,6 +127,12 @@
                       <input *ngSwitchCase="'description'" pInputText type="text" placeholder="Commence par"
                         class="ui-column-filter" style="width: 100%; margin-top: 0;"
                         (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                      <input *ngSwitchCase="'oldPrice'" pInputText type="text" placeholder="Commence par"
+                        class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                        (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                      <input *ngSwitchCase="'newPrice'" pInputText type="text" placeholder="Commence par"
+                        class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                        (input)="dt.filter($event.target.value, col.field, 'startsWith')">
                     </th>
                     <th style="width: 8em;">
                     </th>
@@ -135,7 +143,7 @@
                   <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
 
                     <td (click)="showProduct($event,op3)">{{rowData.label}}</td>
-                    <td>{{rowData.descritpion}}</td>
+                    <td>{{rowData.description}}</td>
                     <td>{{rowData.oldPrice}}</td>
                     <td>{{rowData.newPrice}}</td>
                     <td>
@@ -148,11 +156,11 @@
               </p-table>
             </div>
 
-            
+
             <p-overlayPanel [baseZIndex]="9999999" #op3>
               <p-lightbox [images]="images"></p-lightbox>
             </p-overlayPanel>
-            
+
             <div class="p-col-3 p-md-3">
             </div>
 

@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 import { RestApiService, AuthResponseData } from '../common';
-
+import { RestConfig } from './../common/services/rest/rest.config';
 
 import { AuthData } from './AuthData';
 import { User } from './user.model';
@@ -82,8 +82,20 @@ export class AuthService implements OnDestroy {
         }
       }));
   }
+
+  get token() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.token;
+        } else {
+          return null;
+        }
+      }));
+  }
+
   login(authData: AuthData): Observable<AuthResponseData> {
-    return this.restApiService.post('/user/login', authData)
+    return this.restApiService.post(RestConfig.REST_AUTH_API_HOST, '/user/login', authData)
       .pipe(
         tap(this.setUserData.bind(this))
       );

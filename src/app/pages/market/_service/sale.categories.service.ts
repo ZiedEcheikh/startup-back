@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Sale } from '../_models/sale.model';
 import { RestApiService } from '../../../common';
+import { SaleCategory } from '../_models';
 import { RestConfig } from '../../../common/services/rest/rest.config';
+
 @Injectable({
     providedIn: 'root'
 })
-export class SaleService {
+export class SaleCategoriesService {
 
     constructor(private restApiService: RestApiService) { }
 
-    addSale(sale: Sale): Observable<Sale> {
-        return this.restApiService.post(RestConfig.REST_MANAGE_API_HOST, '/sales', sale);
+    getAllSaleCategories(): Observable<SaleCategory[]> {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/categories');
     }
 }

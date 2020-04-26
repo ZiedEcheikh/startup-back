@@ -6,7 +6,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message'
+import { MessageModule } from 'primeng/message';
 
 import { AppAuthRoutingModule } from './app.auth.routing.module';
 import { AppAuthComponent } from './app.auth.component';

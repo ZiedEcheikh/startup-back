@@ -7,5 +7,14 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/manage/*": {
+    "target": "http://localhost:8484/manage",
+    "secure": false,
+    "pathRewrite": {
+      "^/manage/*": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

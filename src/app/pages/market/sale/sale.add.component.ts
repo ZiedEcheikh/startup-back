@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 
-import { Category } from '../_models';
+import { SaleCategoriesService, SaleService } from '../_service';
+import { SaleCategory, SaleSubCategory } from '../_models';
+import { Sale } from '../_models/sale.model';
 
 @Component({
   selector: 'app-sale',
@@ -11,31 +14,64 @@ import { Category } from '../_models';
 })
 export class SaleAddComponent implements OnInit {
   items: MenuItem[];
-  categories: Category[];
-  selectedCetegory: Category;
-  saleStat: boolean;
-  constructor() {
+  categories: SaleCategory[];
+  subCategories: SaleSubCategory[] = new Array();
+  selectedCetegory: SaleCategory;
+  selectedSubCetegory: SaleSubCategory;
+  saleStat = false;
 
+  currentDateTime: Date;
+  constructor(private saleCategoriesService: SaleCategoriesService,
+              private saleService: SaleService) {
+
+    this.currentDateTime = new Date();
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
       { label: 'Détails' },
       { label: 'Récap' }
     ];
-    this.categories = [
-      { name: 'Selectionné une catégorie *', code: null },
-      { name: 'Mode', code: 'NY' },
-      { name: 'Maison', code: 'RM' },
-      { name: 'Enfant', code: 'LDN' },
-      { name: 'Sport', code: 'IST' },
-      { name: 'Voyage', code: 'PRS' }
-    ];
   }
-
   ngOnInit() {
+    this.retrieveCategories();
   }
 
-  nextStep() {
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const label = form.value.label;
+    const saleStat = form.value.saleStat;
+    const beginDate = form.value.beginDate;
+    const endDate = form.value.endDate;
+    const category = form.value.category;
+    const subCategory = form.value.subCategory;
+    const descritption = form.value.descritption;
+    const sale = new Sale(label, descritption, beginDate, endDate, category, saleStat, true, this.selectedSubCetegory);
+    this.saveSale(sale);
+  }
 
+  saveSale(sale: Sale) {
+    let saleObs: Observable<Sale>;
+    saleObs = this.saleService.addSale(sale);
+    saleObs.subscribe(restData => {
+      console.log(restData);
+    }, errRes => {
+      console.log(errRes);
+    });
+  }
+  retrieveCategories() {
+    let categoriesObs: Observable<SaleCategory[]>;
+    categoriesObs = this.saleCategoriesService.getAllSaleCategories();
+    categoriesObs.subscribe(restData => {
+      this.categories = restData;
+      console.log(restData);
+    }, errRes => {
+      console.log(errRes);
+    });
+  }
+
+  changeSubCategories(event: any) {
+   this.selectedSubCetegory = null;
   }
 }

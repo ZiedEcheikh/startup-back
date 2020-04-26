@@ -5,17 +5,14 @@
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RestConfig } from './rest.config';
 
 @Injectable()
 export class RestApiService {
 
     private Http: HttpClient;
-    private urlRoot: String;
 
     constructor(Http: HttpClient) {
         this.Http = Http;
-        this.urlRoot = RestConfig.REST_API_HOST;
     }
 
     private _createAuthHeaders(): HttpHeaders {
@@ -28,19 +25,19 @@ export class RestApiService {
         return headers;
     }
 
-    public get(url: string) {
-        return this.Http.get(this.urlRoot + url);
+    public get(urlRoot: string, url: string) {
+        return this.Http.get<any>(urlRoot + url);
     }
 
-    public post(url: string, body: Object) {
-        return this.Http.post<any>(this.urlRoot + url, body);
+    public post(urlRoot: string, url: string, body: object) {
+        return this.Http.post<any>(urlRoot + url, body);
     }
 
-    public put(url: string, body: Object) {
-        return this.Http.put(this.urlRoot + url, body);
+    public put(urlRoot: string, url: string, body: object) {
+        return this.Http.put(urlRoot + url, body);
     }
 
-    public delete(url: string) {
-        return this.Http.delete(this.urlRoot + url);
+    public delete(urlRoot: string, url: string) {
+        return this.Http.delete(urlRoot + url);
     }
 }
