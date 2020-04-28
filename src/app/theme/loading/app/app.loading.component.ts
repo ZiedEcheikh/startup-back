@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
     selector: 'app-laoding',
     templateUrl: './app.loading.component.html'
 })
-export class AppLodingComponent implements OnDestroy {
+export class AppLodingComponent  {
 
     subscription: Subscription;
     loadingEl = false;
@@ -14,11 +14,5 @@ export class AppLodingComponent implements OnDestroy {
         this.subscription = loadingService.loadingHandler.subscribe(response => {
             this.loadingEl = response;
         });
-    }
-
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
     }
 }

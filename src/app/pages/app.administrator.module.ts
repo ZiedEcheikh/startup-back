@@ -8,17 +8,19 @@ import { AppAdministratorRoutingModule } from './app.administrator.routing.modul
 // Application Components
 import { AppAdministratorComponent } from './app.administrator.component';
 import { AppDashboardComponent } from './dashboard/app.dashboard.component';
-import {AppRightPanelComponent} from '../theme/rightpanel/app.rightpanel.component';
-import {AppMenuComponent} from '../theme/menu/app.menu.component';
-import {AppMenuitemComponent} from '../theme/menu/app.menuitem.component';
-import {AppTopBarComponent} from '../theme/topbar/app.topbar.component';
-import {AppBreadcrumbComponent} from '../theme/breadcrumb/app.breadcrumb.component';
+import { AppRightPanelComponent } from '../theme/rightpanel/app.rightpanel.component';
+import { AppMenuComponent } from '../theme/menu/app.menu.component';
+import { AppMenuitemComponent } from '../theme/menu/app.menuitem.component';
+import { AppTopBarComponent } from '../theme/topbar/app.topbar.component';
+import { AppBreadcrumbComponent } from '../theme/breadcrumb/app.breadcrumb.component';
 
-import {AppFooterComponent} from '../theme/footer/app.footer.component';
-import {AppConfigComponent} from '../theme/config/app.config.component';
+import { AppFooterComponent } from '../theme/footer/app.footer.component';
+import { AppConfigComponent } from '../theme/config/app.config.component';
+
+import { AppLodingPageComponent } from '../theme/loading/page/app.loading.page.component';
 // Application services
-import {BreadcrumbService} from '../theme/breadcrumb/breadcrumb.service';
-import {MenuService} from '../theme/menu/app.menu.service';
+import { BreadcrumbService } from '../theme/breadcrumb/breadcrumb.service';
+import { MenuService } from '../theme/menu/app.menu.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import {MenuService} from '../theme/menu/app.menu.service';
     AppRightPanelComponent,
     AppBreadcrumbComponent,
     AppFooterComponent,
-    AppConfigComponent],
+    AppConfigComponent, AppLodingPageComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,6 +41,6 @@ import {MenuService} from '../theme/menu/app.menu.service';
   ],
   providers: [
     BreadcrumbService, MenuService
-],
+  ],
 })
 export class AppAdministratorModule { }

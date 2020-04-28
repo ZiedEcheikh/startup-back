@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import {LoadingService} from '../theme/loading/app.loading.service';
+import {LoadingService} from '../theme';
 import { AuthService } from './auth.service';
 
 import { AuthData } from './AuthData';
@@ -35,6 +35,7 @@ export class AppAuthComponent  implements OnInit {
 
 
   ngOnInit(): void {
+    this.loadingService.present();
     setTimeout(() =>  this.loadingService.dismiss(), 2000);
   }
 

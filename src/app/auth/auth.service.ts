@@ -76,7 +76,7 @@ export class AuthService implements OnDestroy {
     return this._user.asObservable().pipe(
       map(user => {
         if (user) {
-          return !!user.id;
+          return user.id;
         } else {
           return null;
         }

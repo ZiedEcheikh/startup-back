@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+
 
 import { SaleCategoriesService, SaleService } from '../_service';
 import { SaleCategory, SaleSubCategory } from '../_models';
 import { Sale } from '../_models/sale.model';
 
+import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 @Component({
   selector: 'app-sale',
   templateUrl: './sale.add.component.html',
@@ -21,8 +24,8 @@ export class SaleAddComponent implements OnInit {
   saleStat = false;
 
   currentDateTime: Date;
-  constructor(private saleCategoriesService: SaleCategoriesService,
-              private saleService: SaleService) {
+  constructor(private saleCategoriesService: SaleCategoriesService, private router: Router,
+              private saleService: SaleService, private loadingPageService: LoadingPageService) {
 
     this.currentDateTime = new Date();
     this.items = [
@@ -52,11 +55,15 @@ export class SaleAddComponent implements OnInit {
   }
 
   saveSale(sale: Sale) {
+    this.loadingPageService.present();
     let saleObs: Observable<Sale>;
     saleObs = this.saleService.addSale(sale);
     saleObs.subscribe(restData => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+      this.router.navigateByUrl('administrator/market/poster-upload');
       console.log(restData);
     }, errRes => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
       console.log(errRes);
     });
   }
@@ -72,6 +79,6 @@ export class SaleAddComponent implements OnInit {
   }
 
   changeSubCategories(event: any) {
-   this.selectedSubCetegory = null;
+    this.selectedSubCetegory = null;
   }
 }

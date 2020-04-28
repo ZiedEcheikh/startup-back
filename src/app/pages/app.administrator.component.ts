@@ -1,6 +1,6 @@
-import {Component, Renderer2, OnInit} from '@angular/core';
+import { Component, Renderer2, OnInit } from '@angular/core';
 import { MenuService } from '../theme/menu/app.menu.service';
-import {LoadingService} from '../theme/loading/app.loading.service';
+import { LoadingService, LoadingPageService } from '../theme';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -66,9 +66,12 @@ export class AppAdministratorComponent implements OnInit {
 
     menuHoverActive: boolean;
 
-    constructor(public renderer: Renderer2, private menuService: MenuService, private loadingService: LoadingService) {}
+    constructor(public renderer: Renderer2, private menuService: MenuService,
+                private loadingPageService: LoadingPageService, private loadingService: LoadingService) { }
     ngOnInit(): void {
-        setTimeout(() =>  this.loadingService.dismiss(), 2000);
+        setTimeout(() => this.loadingService.dismiss(), 2000);
+        this.loadingPageService.present();
+        setTimeout(() => this.loadingPageService.dismiss(), 2000);
     }
 
     onLayoutClick() {
@@ -123,8 +126,10 @@ export class AppAdministratorComponent implements OnInit {
         this.topbarItemClick = true;
 
         if (this.activeTopbarItem === item) {
-            this.activeTopbarItem = null; } else {
-            this.activeTopbarItem = item; }
+            this.activeTopbarItem = null;
+        } else {
+            this.activeTopbarItem = item;
+        }
 
         event.preventDefault();
     }

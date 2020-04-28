@@ -11,6 +11,7 @@ export class Sale {
     subCategory?: SaleSubCategory;
     enable: boolean;
     draft: boolean;
+    userId: string;
     public constructor(label: string, description: string,
                        beginDate: Date, endDate: Date, category: SaleCategory,
                        enable: boolean, draft: boolean, subCategory?: SaleSubCategory) {
