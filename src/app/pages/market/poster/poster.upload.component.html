@@ -33,9 +33,9 @@
             </div>
 
             <div class="p-col-8 p-md-8">
-              <p-fileUpload name="myfile[]" chooseLabel="Choisir" uploadLabel="Télécharger" cancelLabel="Annuler"
-                url="./upload.php"></p-fileUpload>
+              <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="onUpload($event)"></p-fileUpload>
             </div>
+
 
             <div class="p-col-2 p-md-2">
             </div>
