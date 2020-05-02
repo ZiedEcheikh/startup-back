@@ -60,7 +60,7 @@ export class SaleAddComponent implements OnInit {
     saleObs = this.saleService.addSale(sale);
     saleObs.subscribe(restData => {
       setTimeout(() => this.loadingPageService.dismiss(), 2000);
-      this.router.navigateByUrl('administrator/market/poster-upload');
+      this.router.navigate(['/administrator/market/poster-upload'], { queryParams: { saleId: restData.id }});
       console.log(restData);
     }, errRes => {
       setTimeout(() => this.loadingPageService.dismiss(), 2000);

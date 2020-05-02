@@ -29,4 +29,8 @@ export class SalePosterService {
                 })
             );
     }
+
+    getPosterOfSale( saleId: string): Observable<SalePosterData> {
+        return this.restApiService.get(RestConfig.REST_FILES_API_HOST, '/file/sale/' + saleId);
+    }
 }

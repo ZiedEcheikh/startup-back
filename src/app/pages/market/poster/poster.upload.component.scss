@@ -16,3 +16,11 @@
     font-weight: bolder;
     margin: 18px 0;
 }
+
+::ng-deep body .ui-overlaypanel {
+    border: 1px solid #dddddd;
+    z-index: 10000;
+}
+::ng-deep .ui-fileupload-row {
+    display: initial;
+}

@@ -16,7 +16,7 @@ export class SaleService {
 
     addSale(sale: Sale): Observable<Sale> {
 
-       return this.authService.userId
+        return this.authService.userId
             .pipe(
                 take(1),
                 switchMap(userId => {
@@ -27,5 +27,9 @@ export class SaleService {
                     return this.restApiService.post(RestConfig.REST_MANAGE_API_HOST, '/sales', sale);
                 })
             );
+    }
+
+    getSale(saleId: string): Observable<Sale> {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/sales/' + saleId);
     }
 }

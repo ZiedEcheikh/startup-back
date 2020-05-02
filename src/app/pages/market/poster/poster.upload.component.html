@@ -27,13 +27,58 @@
     <div class="p-grid">
       <div class="p-col-12">
         <div class="card card-w-title">
-          <h1>Image</h1>
+          <h1>Affiche vente {{saleLabel}}</h1>
           <div class="p-grid form-group block-marge">
             <div class="p-col-2 p-md-2">
             </div>
 
             <div class="p-col-8 p-md-8">
-              <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="onUpload($event)"></p-fileUpload>
+              <p-fileUpload #form name="demo[]" [disabled]="isHavePoster" chooseLabel="Choisir" uploadLabel="Télécharger"
+                [showCancelButton]="false"  [showUploadButton]="!isHavePoster" 
+                (onSelect)="onFileSelect($event)" customUpload="true"
+                (uploadHandler)="onUploadHandler($event, form)">
+
+                <ng-template let-file pTemplate="file" [ngIf]="!isHavePoster">
+                  <ul *ngIf="uploadedFiles.length">
+                    <div *ngFor="let file of uploadedFiles" class="ui-fileupload-row">
+                      <div (click)="op1.toggle($event)"> <img [src]="file.objectURL" width="50"></div>
+                      <div> {{file.name}} </div>
+                      <div>{{file.size}} bytes</div>
+                      <div>
+                        <p-button icon="pi pi-times"></p-button>
+                      </div>
+                      <div>
+
+                      </div>
+                    </div>
+
+                    <p-overlayPanel style="top: auto;left: auto;" #op1>
+                      <img [src]="file.objectURL" width="442" height="182" style="z-index: 10000000;" alt="Nature 1" />
+                    </p-overlayPanel>
+
+                  </ul>
+                </ng-template>
+                <ng-template pTemplate="content"  [ngIf]="isHavePoster">
+                  <ul *ngIf="uploadedFiles.length">
+                    <div *ngFor="let file of uploadedFiles" class="ui-fileupload-row">
+                      <div (click)="op1.toggle($event)"> <img src="{{file.path}}" width="50"></div>
+                      <div> {{file.name}} </div>
+                      <div>
+                        <button pButton type="button"  icon="pi pi-trash" class="ui-button-danger"></button>
+                      </div>
+                      
+                        <p-overlayPanel style="top: auto;left: auto;" #op1>
+                          <img src="{{file.path}}" width="442" height="182" style="z-index: 10000000;" alt="Nature 1" />
+                        </p-overlayPanel>
+                  
+                    </div>
+
+                   
+
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
+
             </div>
 
 

@@ -68,7 +68,6 @@ export class SaleProductsManageComponent implements OnInit {
   showProduct(event, overlaypanel: OverlayPanel) {
     overlaypanel.toggle(event);
   }
-  
   onUpload(event) {
     for (const file of event.files) {
       this.uploadedFiles.push(file);
