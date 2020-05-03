@@ -27,25 +27,24 @@
     <div class="p-grid">
       <div class="p-col-12">
         <div class="card card-w-title">
-          <h1>Affiche vente {{saleLabel}}</h1>
+          <h1>Vente {{saleLabel}}</h1>
           <div class="p-grid form-group block-marge">
             <div class="p-col-2 p-md-2">
             </div>
 
             <div class="p-col-8 p-md-8">
-              <p-fileUpload #form name="demo[]" [disabled]="isHavePoster" chooseLabel="Choisir" uploadLabel="Télécharger"
-                [showCancelButton]="false"  [showUploadButton]="!isHavePoster" 
-                (onSelect)="onFileSelect($event)" customUpload="true"
-                (uploadHandler)="onUploadHandler($event, form)">
+              <p-fileUpload #form name="demo[]" [disabled]="isHavePoster" chooseLabel="Choisir"
+                uploadLabel="Télécharger" [showCancelButton]="false" [showUploadButton]="!isHavePoster"
+                (onSelect)="onFileSelect($event)" customUpload="true" (uploadHandler)="onUploadHandler($event, form)">
 
-                <ng-template let-file pTemplate="file" [ngIf]="!isHavePoster">
-                  <ul *ngIf="uploadedFiles.length">
+                <ng-template let-file pTemplate="file">
+                  <ul *ngIf="uploadedFiles.length && !isHavePoster">
                     <div *ngFor="let file of uploadedFiles" class="ui-fileupload-row">
                       <div (click)="op1.toggle($event)"> <img [src]="file.objectURL" width="50"></div>
                       <div> {{file.name}} </div>
                       <div>{{file.size}} bytes</div>
                       <div>
-                        <p-button icon="pi pi-times"></p-button>
+                        <button pButton type="button" (click)="onDeleteLocalPoster()" icon="pi pi-times"></button>
                       </div>
                       <div>
 
@@ -58,23 +57,21 @@
 
                   </ul>
                 </ng-template>
-                <ng-template pTemplate="content"  [ngIf]="isHavePoster">
-                  <ul *ngIf="uploadedFiles.length">
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length && isHavePoster">
                     <div *ngFor="let file of uploadedFiles" class="ui-fileupload-row">
                       <div (click)="op1.toggle($event)"> <img src="{{file.path}}" width="50"></div>
                       <div> {{file.name}} </div>
                       <div>
-                        <button pButton type="button"  icon="pi pi-trash" class="ui-button-danger"></button>
+                        <button pButton type="button" (click)="confirmDeletePoster()" icon="pi pi-trash"
+                          class="ui-button-danger"></button>
                       </div>
-                      
-                        <p-overlayPanel style="top: auto;left: auto;" #op1>
-                          <img src="{{file.path}}" width="442" height="182" style="z-index: 10000000;" alt="Nature 1" />
-                        </p-overlayPanel>
-                  
+
+                      <p-overlayPanel style="top: auto;left: auto;" #op1>
+                        <img src="{{file.path}}" width="442" height="182" style="z-index: 10000000;" alt="Nature 1" />
+                      </p-overlayPanel>
+
                     </div>
-
-                   
-
                   </ul>
                 </ng-template>
               </p-fileUpload>
@@ -91,8 +88,12 @@
             <div class="p-col-3 p-md-3">
             </div>
 
-            <div class="p-col-6 p-md-6">
-              <button type="button" label="Suivant" pButton icon="pi pi-check"></button>
+            <div class="p-col-3 p-md-3">
+              <button type="button" label="Précédent" pButton></button>
+            </div>
+
+            <div class="p-col-3 p-md-3">
+              <button type="button" [disabled]="!isHavePoster" label="Suivant" pButton></button>
             </div>
 
             <div class="p-col-3 p-md-3">
@@ -105,3 +106,14 @@
     </div>
   </div>
 </div>
+
+<p-dialog header="Confirmation" [(visible)]="display" modal="true" showEffect="fade" [style]="{width: '400px'}">
+  <p style="margin-top: 1em; margin-bottom: 1em">
+    Voulez-vous supprimer l'affiche ?
+  </p>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="onDeletePosterOfSale()" label="Oui"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Non"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

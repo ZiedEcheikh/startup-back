@@ -18,7 +18,7 @@ import { LightboxModule } from 'primeng/lightbox';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PanelModule } from 'primeng/panel';
 import { MessageModule } from 'primeng/message';
-import {GalleriaModule} from 'primeng/galleria';
+import { DialogModule } from 'primeng/dialog';
 
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
@@ -37,7 +37,8 @@ const PRIME_THEME_COMPONENTS = [
   LightboxModule,
   OverlayPanelModule,
   PanelModule,
-  MessageModule
+  MessageModule,
+  DialogModule
 ];
 
 @NgModule({
