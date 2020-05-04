@@ -89,11 +89,11 @@
             </div>
 
             <div class="p-col-3 p-md-3">
-              <button type="button" label="Précédent" pButton></button>
+              <button type="button" (click)="goBack()" label="Précédent" pButton></button>
             </div>
 
             <div class="p-col-3 p-md-3">
-              <button type="button" [disabled]="!isHavePoster" label="Suivant" pButton></button>
+              <button type="button"  (click)="goNext()"  [disabled]="!isHavePoster" label="Suivant" pButton></button>
             </div>
 
             <div class="p-col-3 p-md-3">

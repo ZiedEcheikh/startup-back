@@ -33,9 +33,8 @@
                 </div>
 
                 <div class="p-col-5 p-md-5">
-                  <input type="text" pInputText placeholder="Libellé *" autocomplete="off" ngModel name="label" required
+                  <input type="text" pInputText placeholder="Libellé *" autocomplete="off" [(ngModel)]="label" name="label" required
                     #labelCtrl="ngModel" />
-
                   <p-message *ngIf="!labelCtrl.valid && labelCtrl.touched" severity="error" text="Libellé obligatoire">
                   </p-message>
                 </div>
@@ -54,7 +53,7 @@
 
                 <div class="p-col-5 p-md-5">
                   <p-calendar id="datetimebegin" dateFormat="yy-mm-dd" showTime="true" placeholder="Date début *"
-                    [minDate]="currentDateTime" ngModel #beginDateCtrl="ngModel" name="beginDate" required>
+                    [minDate]="currentDateTime" [(ngModel)]="beginDate" #beginDateCtrl="ngModel" name="beginDate" required>
                   </p-calendar>
                   <p-message *ngIf="!beginDateCtrl.valid && beginDateCtrl.touched" severity="error"
                     text="Date début obligatoire"></p-message>
@@ -65,7 +64,7 @@
 
                 <div class="p-col-5 p-md-5">
                   <p-calendar id="datetimeend" dateFormat="yy-mm-dd" showTime="true" [disabled]="!beginDateCtrl.valid"
-                    placeholder="Date fin *" [minDate]="beginDateCtrl.value" ngModel #endDateCtrl="ngModel"
+                    placeholder="Date fin *" [minDate]="beginDateCtrl.value" [(ngModel)]="endDate" #endDateCtrl="ngModel"
                     name="endDate" required></p-calendar>
                   <p-message *ngIf="!endDateCtrl.valid && endDateCtrl.touched" severity="error"
                     text="Date fin obligatoire"></p-message>
@@ -102,7 +101,7 @@
                 </div>
 
                 <div class="p-col-5 p-md-5">
-                  <textarea [rows]="3" [cols]="30" ngModel pInputTextarea placeholder="Descritption"
+                  <textarea [rows]="3" [cols]="30" [(ngModel)]="description" pInputTextarea placeholder="Descritption"
                     #decriptionCtrl="ngModel" #decriptionCtrl autoResize="autoResize" name="descritption"></textarea>
                 </div>
 

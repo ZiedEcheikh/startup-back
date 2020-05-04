@@ -14,17 +14,6 @@ export class RestApiService {
     constructor(Http: HttpClient) {
         this.Http = Http;
     }
-
-    private _createAuthHeaders(): HttpHeaders {
-        let headers = new HttpHeaders();
-
-        /*if(this.userService.user) {
-            headers.set('Authorization', this.identityService.user.token);
-        }*/
-
-        return headers;
-    }
-
     public get(urlRoot: string, url: string) {
         return this.Http.get<any>(urlRoot + url);
     }
@@ -34,10 +23,10 @@ export class RestApiService {
     }
 
     public put(urlRoot: string, url: string, body: object) {
-        return this.Http.put(urlRoot + url, body);
+        return this.Http.put<any>(urlRoot + url, body);
     }
 
     public delete(urlRoot: string, url: string) {
-        return this.Http.delete(urlRoot + url);
+        return this.Http.delete<any>(urlRoot + url);
     }
 }

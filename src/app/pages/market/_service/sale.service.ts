@@ -28,7 +28,20 @@ export class SaleService {
                 })
             );
     }
+    updateSale(sale: Sale): Observable<Sale> {
 
+        return this.authService.userId
+            .pipe(
+                take(1),
+                switchMap(userId => {
+                    if (!userId) {
+                        throw new Error('No user id found !');
+                    }
+                    sale.userId = userId;
+                    return this.restApiService.put(RestConfig.REST_MANAGE_API_HOST, '/sales', sale);
+                })
+            );
+    }
     getSale(saleId: string): Observable<Sale> {
         return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/sales/' + saleId);
     }

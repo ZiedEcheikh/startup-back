@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
-
+import { take, switchMap, tap } from 'rxjs/operators';
 import { SaleCategoriesService, SaleService } from '../_service';
 import { SaleCategory, SaleSubCategory } from '../_models';
 import { Sale } from '../_models/sale.model';
@@ -22,10 +22,14 @@ export class SaleAddComponent implements OnInit {
   selectedCetegory: SaleCategory;
   selectedSubCetegory: SaleSubCategory;
   saleStat = false;
-
+  label: string;
+  beginDate: Date;
+  endDate: Date;
+  fetchSaleId: string;
   currentDateTime: Date;
-  constructor(private saleCategoriesService: SaleCategoriesService, private router: Router,
-              private saleService: SaleService, private loadingPageService: LoadingPageService) {
+  description: string;
+  constructor(private saleCategoriesService: SaleCategoriesService, private route: ActivatedRoute, private router: Router,
+    private saleService: SaleService, private loadingPageService: LoadingPageService) {
 
     this.currentDateTime = new Date();
     this.items = [
@@ -36,7 +40,35 @@ export class SaleAddComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.loadingPageService.present();
     this.retrieveCategories();
+    this.initialize().subscribe(saleCreated => {
+      this.fetchSaleId = saleCreated.id.toString();
+      this.label = saleCreated.label;
+      this.saleStat = saleCreated.enable;
+      this.beginDate = new Date(saleCreated.beginDate);
+      this.endDate = new Date(saleCreated.endDate);
+      this.selectedCetegory = saleCreated.category;
+      this.selectedSubCetegory = saleCreated.subCategory;
+      this.description = saleCreated.description;
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+    },
+      errors => {
+        console.log(errors);
+        this.fetchSaleId = null;
+        setTimeout(() => this.loadingPageService.dismiss(), 2000);
+      });
+  }
+
+  initialize() {
+    return this.route.queryParams.pipe(
+      take(1),
+      switchMap(params => {
+        if ( params.saleId) {
+          return this.saleService.getSale(params.saleId);
+        }
+      })
+    );
   }
 
   onSubmit(form: NgForm) {
@@ -51,7 +83,13 @@ export class SaleAddComponent implements OnInit {
     const subCategory = form.value.subCategory;
     const descritption = form.value.descritption;
     const sale = new Sale(label, descritption, beginDate, endDate, category, saleStat, true, this.selectedSubCetegory);
-    this.saveSale(sale);
+    if (this.fetchSaleId == null) {
+      this.saveSale(sale);
+    } else {
+      sale.id = Number(this.fetchSaleId);
+      this.updateSale(sale);
+    }
+
   }
 
   saveSale(sale: Sale) {
@@ -60,7 +98,20 @@ export class SaleAddComponent implements OnInit {
     saleObs = this.saleService.addSale(sale);
     saleObs.subscribe(restData => {
       setTimeout(() => this.loadingPageService.dismiss(), 2000);
-      this.router.navigate(['/administrator/market/poster-upload'], { queryParams: { saleId: restData.id }});
+      this.router.navigate(['/administrator/market/poster-upload'], { queryParams: { saleId: restData.id } });
+      console.log(restData);
+    }, errRes => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+      console.log(errRes);
+    });
+  }
+  updateSale(sale: Sale) {
+    this.loadingPageService.present();
+    let saleObs: Observable<Sale>;
+    saleObs = this.saleService.updateSale(sale);
+    saleObs.subscribe(restData => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+      this.router.navigate(['/administrator/market/poster-upload'], { queryParams: { saleId: restData.id } });
       console.log(restData);
     }, errRes => {
       setTimeout(() => this.loadingPageService.dismiss(), 2000);

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 
 import { SalePosterService, SaleService } from '../_service';
 
 import { Sale, SalePosterData } from '../_models';
-import { take, switchMap, map, tap } from 'rxjs/operators';
+import { take, switchMap, tap } from 'rxjs/operators';
 
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
+import { ErrorCode } from '../../../common';
 
 @Component({
   selector: 'app-sale',
@@ -26,7 +27,7 @@ export class PosterUploadComponent implements OnInit {
   fetchSaleId: string;
   display = false;
   constructor(private saleService: SaleService, private salePosterService: SalePosterService,
-    private route: ActivatedRoute, private loadingPageService: LoadingPageService) {
+              private route: ActivatedRoute, private router: Router, private loadingPageService: LoadingPageService) {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
@@ -39,7 +40,11 @@ export class PosterUploadComponent implements OnInit {
     this.initialize().subscribe(poster => {
       console.log(poster);
     },
-      error => { console.log(error); }
+      errors => {
+        if (errors.error.errorCode === ErrorCode.NOT_SALE_EXIST) {
+          this.router.navigate(['/administrator/market/sale-add']);
+        }
+      }
     );
   }
 
@@ -49,7 +54,12 @@ export class PosterUploadComponent implements OnInit {
       take(1),
       switchMap(params => {
         this.fetchSaleId = params.saleId;
-        return this.saleService.getSale(this.fetchSaleId);
+        if (this.fetchSaleId) {
+          return this.saleService.getSale(this.fetchSaleId);
+        } else {
+          this.router.navigate(['/administrator/market/sale-add']);
+          return;
+        }
       }),
       take(1),
       switchMap(saleCreated => {
@@ -127,5 +137,12 @@ export class PosterUploadComponent implements OnInit {
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
+  }
+
+  goNext() {
+    this.router.navigate(['/administrator/market/sale-details'], { queryParams: { saleId: this.fetchSaleId }});
+  }
+  goBack() {
+    this.router.navigate(['/administrator/market/sale-add'], { queryParams: { saleId: this.fetchSaleId }});
   }
 }
