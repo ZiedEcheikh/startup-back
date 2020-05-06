@@ -1,16 +1,21 @@
-export class SaleDetails  {
+import { Sale } from './sale.model';
+import { SaleDetails } from './sale.details.model';
+
+export class NodeTreeSaleDetails  {
     id?: number;
     label?: string;
     descritpion?: string;
+    detailsProducts: boolean;
+    detailsWithProducts: boolean;
     data?: any;
     icon?: any;
     expandedIcon?: any;
     collapsedIcon?: any;
-    children?: SaleDetails[];
+    children?: NodeTreeSaleDetails[];
     leaf?: boolean;
     expanded?: boolean;
     type?: string;
-    parent?: SaleDetails;
+    parent?: NodeTreeSaleDetails;
     partialSelected?: boolean;
     styleClass?: string;
     draggable?: boolean;

@@ -32,7 +32,7 @@
             </div>
 
             <div class="p-col-10 p-md-10">
-              <p-tree [value]="saleDetails" (onNodeSelect)="nodeSelect($event)" layout="horizontal"
+              <p-tree [value]="treeSaleDetails" (onNodeSelect)="nodeSelect($event)" layout="horizontal"
                 selectionMode="single" [(selection)]="selectedDetail"
                 (onNodeContextMenuSelect)="contextMenu($event.node)" [contextMenu]="cm"></p-tree>
               <p-contextMenu #cm [model]="menus" [style]="{'width':'12.5em'}"></p-contextMenu>

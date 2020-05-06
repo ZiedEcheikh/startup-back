@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
-import { SaleDetails } from '../_models/SaleDetails';
+import { NodeTreeSaleDetails } from '../_models';
 import {SaleDetailsService} from '../_service';
 
 @Component({
@@ -14,8 +14,8 @@ export class SaleDetailsManageComponent implements OnInit {
   selectedType: string;
   uploadedFiles: any[] = [];
   items: MenuItem[];
-  currentDetails: SaleDetails[];
-  selectedDetails: SaleDetails;
+  currentDetails: NodeTreeSaleDetails[];
+  selectedDetails: NodeTreeSaleDetails;
   cols: any[];
   constructor(private saleDetailsService: SaleDetailsService) {
     this.items = [
@@ -24,8 +24,6 @@ export class SaleDetailsManageComponent implements OnInit {
       { label: 'Détails' },
       { label: 'Récap' }
     ];
-
-    this.currentDetails = saleDetailsService.getSaleDetailsOfParent('1');
 
     this.cols = [
       { field: 'label', header: 'Labelle' },

@@ -5,4 +5,6 @@ export class SaleProduct  {
     oldPrice?: number;
     newPrice?: number;
     pictures?: string[];
+
+    
 }
