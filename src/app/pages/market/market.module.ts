@@ -15,7 +15,7 @@ import { SaleDetailsManageComponent } from './details_manage/sale.details.manage
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 
 /*Services*/
-import { SaleService, SaleDetailsService, SaleProductService, SalePosterService } from './_service';
+import { SaleService, SaleDetailsService, SaleProductService, SalePosterService, MenuService } from './_service';
 
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
@@ -31,7 +31,8 @@ import { SaleService, SaleDetailsService, SaleProductService, SalePosterService 
     SaleService,
     SaleDetailsService,
     SaleProductService,
-    SalePosterService
+    SalePosterService,
+    MenuService
   ]
 })
 export class MarketModule { }

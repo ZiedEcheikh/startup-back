@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
-import { SaleService, SaleDetailsService } from '../_service';
+import { SaleService, SaleDetailsService, MenuService } from '../_service';
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 import { NodeTreeSaleDetails, Sale } from '../_models';
 import { ErrorCode } from 'src/app/common';
@@ -22,39 +22,12 @@ export class SaleDetailsComponent implements OnInit {
   selectedDetail: NodeTreeSaleDetails;
   fetchSaleId: string;
   constructor(private saleService: SaleService, private saleDetailsService: SaleDetailsService, private router: Router,
-    private route: ActivatedRoute, private loadingPageService: LoadingPageService) {
+    private route: ActivatedRoute, private menuService: MenuService, private loadingPageService: LoadingPageService) {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
       { label: 'Détails' },
       { label: 'Récap' }
-    ];
-
-    this.menus = [
-      {
-        label: 'File',
-        items: [{
-          label: 'New',
-          icon: 'pi pi-fw pi-plus',
-          items: [
-            { label: 'Project' },
-            {
-              label: 'Other', command: (event: Event) => { this.router.navigateByUrl('administrator/market/sale-manage/' + this.selectedDetail.id); }
-            },
-          ]
-        },
-        { label: 'Open' },
-        { label: 'Quit' }
-        ]
-      },
-      {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-plus',
-        items: [
-          { label: 'Delete', icon: 'pi pi-fw pi-trash' },
-          { label: 'Refresh', icon: 'pi pi-fw pi-refresh' }
-        ]
-      }
     ];
   }
 
@@ -93,7 +66,7 @@ export class SaleDetailsComponent implements OnInit {
       }),
       take(1),
       tap(saleDetails => {
-       this.treeSaleDetails = this.saleDetailsService.generateTreeForSale(this.currentSale, saleDetails);
+        this.treeSaleDetails = this.saleDetailsService.generateTreeForSale(this.currentSale, saleDetails);
       }),
     );
   }
@@ -102,8 +75,6 @@ export class SaleDetailsComponent implements OnInit {
     // this.router.navigateByUrl('administrator/market/sale-manage/' + this.selectedDetail.id);
   }
   contextMenu(event: any) {
-    if (false) {
-      console.log('selectrf');
-    }
+  this.menus = this.menuService.getItemTreeMenu(event);
   }
 }

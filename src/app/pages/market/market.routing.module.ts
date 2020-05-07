@@ -18,8 +18,8 @@ const routes: Routes = [
       { path: 'poster-upload', component: PosterUploadComponent },
       { path: 'sale-details', component: SaleDetailsComponent },
       { path: 'sale-recap', component: SaleRecapComponent },
-      { path: 'sale-details-manage/:idParent', component: SaleDetailsManageComponent},
-      { path: 'sale-products-manage/:idParent', component: SaleProductsManageComponent},
+      { path: 'sale-details-manage', component: SaleDetailsManageComponent},
+      { path: 'sale-products-manage', component: SaleProductsManageComponent},
       { path: '', redirectTo: 'sale', pathMatch: 'full' },
       { path: '**', redirectTo: 'sale', pathMatch: 'full' },
     ]
