@@ -55,7 +55,7 @@ export class PosterUploadComponent implements OnInit {
       switchMap(params => {
         this.fetchSaleId = params.saleId;
         if (this.fetchSaleId) {
-          return this.saleService.getSale(this.fetchSaleId);
+          return this.saleService.getSale(Number(this.fetchSaleId));
         } else {
           this.router.navigate(['/administrator/market/sale-add']);
           return;

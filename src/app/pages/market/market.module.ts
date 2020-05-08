@@ -12,6 +12,7 @@ import { PosterUploadComponent } from './poster/poster.upload.component';
 import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleRecapComponent } from './recap/sale.recap.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
+import { SaleDetailsCreateUpdateComponent } from './details_manage/create_update/sale.details.create.update.component';
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 
 /*Services*/
@@ -20,7 +21,7 @@ import { SaleService, SaleDetailsService, SaleProductService, SalePosterService,
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
     SaleDetailsComponent, SaleRecapComponent,
-    SaleDetailsManageComponent, SaleProductsManageComponent],
+    SaleDetailsManageComponent, SaleDetailsCreateUpdateComponent, SaleProductsManageComponent],
   imports: [
     CommonModule,
     FormsModule,

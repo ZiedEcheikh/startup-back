@@ -12,49 +12,55 @@ export class MenuService {
 
     }
     getItemsNewSaleSteps() {
-
+        let menus: MenuItem[] = [];
+        return  menus = [
+            { label: 'Vente' },
+            { label: 'Affiche' },
+            { label: 'Détails' },
+            { label: 'Récap' }
+          ];
     }
 
-    getItemTreeMenu(node: NodeTreeSaleDetails) {
+    getItemTreeMenu(node: NodeTreeSaleDetails, saleId: number) {
 
         if (node.detailsProducts) {
-            return this.getItemsShowProducts();
+            return this.getItemsShowProducts(node, saleId);
         }
 
         if (node.children == null || node.children.length === 0) {
-            return this.getItemsManageSaleDetailsOrProducts();
+            return this.getItemsManageSaleDetailsOrProducts(node, saleId);
         }
         if (node.detailsWithProducts) {
-            return this.getItemsManageSaleDetailsProducts();
+            return this.getItemsManageSaleDetailsProducts(node, saleId);
         }
 
         if (!node.detailsWithProducts) {
-            return this.getItemsManageSaleDetails();
+            return this.getItemsManageSaleDetails(node, saleId);
         }
     }
 
-    getItemsManageSaleDetailsOrProducts() {
+    getItemsManageSaleDetailsOrProducts(node: NodeTreeSaleDetails, saleId: number) {
         let menus: MenuItem[] = [];
         return menus = [
             {
                 label: 'Ajouter',
                 items: [{
-                    label: 'Groupe Details', command: (event: Event) => { this.goSaleDetailsManage(1); }
+                    label: 'Groupe Details', command: (event: Event) => { this.goSaleDetailsManage(node, saleId); }
                 },
-                { label: 'Produits', command: (event: Event) => { this.goProductsManage(1); } }
+                { label: 'Produits', command: (event: Event) => { this.goProductsManage(node, saleId); } }
                 ]
             },
             { label: 'Quit' }
         ];
     }
 
-    getItemsManageSaleDetails() {
+    getItemsManageSaleDetails(node: NodeTreeSaleDetails, saleId: number) {
         let menus: MenuItem[] = [];
         return menus = [
             {
                 label: 'Ajouter',
                 items: [{
-                    label: 'Groupe Details', command: (event: Event) => { this.goSaleDetailsManage(1); }
+                    label: 'Groupe Details', command: (event: Event) => { this.goSaleDetailsManage(node, saleId); }
                 }
                 ]
             },
@@ -62,32 +68,34 @@ export class MenuService {
         ];
     }
 
-    getItemsManageSaleDetailsProducts() {
+    getItemsManageSaleDetailsProducts(node: NodeTreeSaleDetails, saleId: number) {
         let menus: MenuItem[] = [];
         return menus = [
             {
                 label: 'Ajouter',
                 items: [
-                    { label: 'Produits', command: (event: Event) => { this.goProductsManage(1); } }
+                    { label: 'Produits', command: (event: Event) => { this.goProductsManage(node, saleId); } }
                 ]
             },
             { label: 'Quit' }
         ];
     }
-    getItemsShowProducts() {
+    getItemsShowProducts(node: NodeTreeSaleDetails, saleId: number) {
         let menus: MenuItem[] = [];
         return menus = [
             {
-                label: 'Afficher Produits', command: (event: Event) => { this.goProductsManage(1); }
+                label: 'Afficher Produits', command: (event: Event) => { this.goProductsManage(node, saleId); }
             },
             { label: 'Quit' }
         ];
     }
 
-    goSaleDetailsManage(idDetails: number) {
-        this.router.navigate(['/administrator/market/sale-details-manage'], { queryParams: { saleId: idDetails } });
+    goSaleDetailsManage(node: NodeTreeSaleDetails, saleId: number) {
+        this.router.navigate(['/administrator/market/sale-details-manage'],
+            { queryParams: {saleId, parentId: node.id, nodeOfSale: node.isNodeOfSale } });
     }
-    goProductsManage(idDetails: number) {
-        this.router.navigate(['/administrator/market/sale-products-manage'], { queryParams: { saleId: idDetails } });
+    goProductsManage(node: NodeTreeSaleDetails, saleId: number) {
+        this.router.navigate(['/administrator/market/sale-products-manage'],
+            {queryParams: {saleId, parentId: node.id, nodeOfSale: node.isNodeOfSale } });
     }
 }

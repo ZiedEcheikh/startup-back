@@ -1,7 +1,8 @@
 import { SaleCategory } from './sale.category.model';
 import { SaleSubCategory } from './sale.sub.category.model';
+import { SaleDetails } from './sale.details.model';
 
-export class Sale {
+export class Sale  {
     id?: number;
     label: string;
     description: string;
@@ -12,10 +13,13 @@ export class Sale {
     enable: boolean;
     draft: boolean;
     userId: string;
-    public constructor(label: string, description: string,
-                       beginDate: Date, endDate: Date, category: SaleCategory,
-                       enable: boolean, draft: boolean, subCategory?: SaleSubCategory) {
+    details?: SaleDetails[];
+    public constructor() {
+    }
 
+    public buildSale(label: string, description: string,
+                     beginDate: Date, endDate: Date, category: SaleCategory,
+                     enable: boolean, draft: boolean, subCategory?: SaleSubCategory) {
         this.label = label;
         this.description = description;
         this.beginDate = beginDate.toISOString();
@@ -24,5 +28,11 @@ export class Sale {
         this.subCategory = subCategory;
         this.draft = draft;
         this.enable = enable;
+        return this;
+    }
+
+    public buildSaleWithId(id: number){
+        this.id = id;
+        return this;
     }
 }

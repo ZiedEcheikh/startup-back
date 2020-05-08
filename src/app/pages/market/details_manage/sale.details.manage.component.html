@@ -8,7 +8,7 @@
             <div class="p-col-2">
             </div>
             <div class="p-col-8">
-              <p-steps [model]="items" [activeIndex]="2"></p-steps>
+              <p-steps [model]="stepsItems" [activeIndex]="2"></p-steps>
             </div>
             <div class="p-col-2">
             </div>
@@ -25,60 +25,15 @@
     <div class="p-grid">
       <div class="p-col-12">
         <div class="card card-w-title">
-          <h1>Ajout Element</h1>
+          <h1 *ngIf="isSale"> Vente {{currentSale?.label}}</h1>
+          <h1 *ngIf="!isSale"> Détails {{currentSaleDetails?.label}}</h1>
           <div class="p-grid form-group block-marge">
             <div class="p-col-3 p-md-3">
             </div>
 
             <div class="p-col-6 p-md-6">
-              <input type="text" pInputText placeholder="Nom *" autocomplete="off" />
-            </div>
-
-            <div class="p-col-3 p-md-3">
-            </div>
-
-          </div>
-
-
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-3 p-md-3">
-            </div>
-
-            <div class="p-col-6 p-md-6">
-              <textarea [rows]="3" [cols]="30" pInputTextarea placeholder="Descritption"
-                autoResize="autoResize"></textarea>
-            </div>
-
-            <div class="p-col-3 p-md-3">
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="p-grid ui-fluid">
-  <div class="p-col-12 p-lg-12">
-    <div class="p-grid">
-      <div class="p-col-12">
-        <div class="card card-w-title">
-          <h1>Les elements</h1>
-          <div class="p-grid form-group block-marge">
-            <div class="p-col-3 p-md-3">
-            </div>
-
-            <div class="p-col-6 p-md-6">
-              <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="currentDetails" [paginator]="true"
-                [rows]="5" dataKey="descritpion" selectionMode="single" [(selection)]="selectedDetails">
-                <ng-template pTemplate="caption">
-                  <div class="ui-table-globalfilter-container">
-                    <input type="text" pInputText size="50" placeholder="Global Filter"
-                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
-                  </div>
-                </ng-template>
+              <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="listDetails" [paginator]="true"
+                [rows]="5" dataKey="label" selectionMode="single" [(selection)]="selectedSaleDetail">
 
                 <ng-template pTemplate="header" let-columns>
                   <tr>
@@ -86,8 +41,9 @@
                       {{col.header}}
                       <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
-                    <th style="width: 8em;">
-                    </th>
+                    <th style="width: 8em; text-align: center;">
+                      <button pButton type="button"  (click)="goCreateDetails()" icon="pi pi-plus"></button>
+                  </th>
                   </tr>
 
                   <tr>
@@ -107,14 +63,32 @@
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
                     <td>{{rowData.label}}</td>
-                    <td>{{rowData.descritpion}}</td>
+                    <td>{{rowData.description}}</td>
                     <td>
-                      <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"  style="margin-right: .5em"></button>
-                      <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"></button>
+                      <button pButton type="button"  class="ui-button-warning"  (click)="goUpdateDetails(rowData)" icon="pi pi-pencil"
+                        style="margin-right: .5em"></button>
+                      <button pButton type="button" class="ui-button-danger"  (click)="confirmDeleteGroupDetails(rowData)" icon="pi pi-trash"></button>
                     </td>
                   </tr>
                 </ng-template>
               </p-table>
+            </div>
+
+            <div class="p-col-3 p-md-3">
+            </div>
+
+          </div>
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-3 p-md-3">
+            </div>
+
+            <div class="p-col-3 p-md-3">
+              <button type="button" (click)="goBack()" label="Précédent" pButton></button>
+            </div>
+
+            <div class="p-col-3 p-md-3">
+              <button type="button"  (click)="goNext()" label="Suivant" pButton></button>
             </div>
 
             <div class="p-col-3 p-md-3">
@@ -127,3 +101,14 @@
     </div>
   </div>
 </div>
+
+<p-dialog header="Confirmation" [(visible)]="display" modal="true" showEffect="fade" [style]="{width: '400px'}">
+  <p style="margin-top: 1em; margin-bottom: 1em">
+    Voulez-vous supprimer le group ?
+  </p>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="onDeleteGroupDetails()" label="Oui"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Non"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

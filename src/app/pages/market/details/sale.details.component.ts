@@ -32,12 +32,13 @@ export class SaleDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.loadingPageService.present();
     this.initialize().subscribe(saleDetails => {
-      console.log(saleDetails);
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
     },
       errors => {
         if (errors.error.errorCode === ErrorCode.NOT_SALE_EXIST) {
+          setTimeout(() => this.loadingPageService.dismiss(), 2000);
           this.router.navigate(['/administrator/market/sale-add']);
         }
       }
@@ -45,13 +46,12 @@ export class SaleDetailsComponent implements OnInit {
   }
 
   initialize() {
-
     return this.route.queryParams.pipe(
       take(1),
       switchMap(params => {
         this.fetchSaleId = params.saleId;
         if (this.fetchSaleId) {
-          return this.saleService.getSale(this.fetchSaleId);
+          return this.saleService.getSale(Number(this.fetchSaleId));
         } else {
           this.router.navigate(['/administrator/market/sale-add']);
           return;
@@ -75,6 +75,13 @@ export class SaleDetailsComponent implements OnInit {
     // this.router.navigateByUrl('administrator/market/sale-manage/' + this.selectedDetail.id);
   }
   contextMenu(event: any) {
-  this.menus = this.menuService.getItemTreeMenu(event);
+  this.menus = this.menuService.getItemTreeMenu(event, Number(this.fetchSaleId));
+  }
+
+  goNext() {
+    this.router.navigate(['/administrator/market/sale-recap'], { queryParams: { saleId: this.fetchSaleId }});
+  }
+  goBack() {
+    this.router.navigate(['/administrator/market/poster-upload'], { queryParams: { saleId: this.fetchSaleId }});
   }
 }

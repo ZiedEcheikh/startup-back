@@ -10,6 +10,21 @@ import { SaleDetails } from '../_models/sale.details.model';
 export class SaleDetailsService {
     constructor(private restApiService: RestApiService) { }
 
+    getSaleDetailsById(idDetails: number) {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/details/' + idDetails);
+    }
+
+    addSaleDetails(saleDetails: SaleDetails) {
+        return this.restApiService.post(RestConfig.REST_MANAGE_API_HOST, '/details/', saleDetails);
+    }
+
+    deleteSaleDetails(idDetails: number) {
+        return this.restApiService.delete(RestConfig.REST_MANAGE_API_HOST, '/details/' + idDetails);
+    }
+
+    updateSaleDetails(saleDetails: SaleDetails) {
+        return this.restApiService.put(RestConfig.REST_MANAGE_API_HOST, '/details/', saleDetails);
+    }
     getSaleDetailsBySaleId(saleId: number) {
         return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/details/sale/' + saleId);
     }
@@ -20,6 +35,7 @@ export class SaleDetailsService {
         nodeOfSale.id = sale.id;
         nodeOfSale.label = sale.label;
         nodeOfSale.descritpion = sale.description;
+        nodeOfSale.isNodeOfSale = true;
         nodeOfSale.children = [];
         saleDetailsTree.push(nodeOfSale);
         for (let i = 0; i < saleDetails.length; i++) {

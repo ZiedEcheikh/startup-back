@@ -7,6 +7,7 @@ export class NodeTreeSaleDetails  {
     descritpion?: string;
     detailsProducts: boolean;
     detailsWithProducts: boolean;
+    isNodeOfSale?: boolean;
     data?: any;
     icon?: any;
     expandedIcon?: any;

@@ -42,7 +42,7 @@ export class SaleService {
                 })
             );
     }
-    getSale(saleId: string): Observable<Sale> {
+    getSale(saleId: number): Observable<Sale> {
         return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/sales/' + saleId);
     }
 }

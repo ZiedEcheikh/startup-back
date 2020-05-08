@@ -82,7 +82,7 @@ export class SaleAddComponent implements OnInit {
     const category = form.value.category;
     const subCategory = form.value.subCategory;
     const descritption = form.value.descritption;
-    const sale = new Sale(label, descritption, beginDate, endDate, category, saleStat, true, this.selectedSubCetegory);
+    const sale = new Sale().buildSale(label, descritption, beginDate, endDate, category, saleStat, true, this.selectedSubCetegory);
     if (this.fetchSaleId == null) {
       this.saveSale(sale);
     } else {
