@@ -42,7 +42,7 @@
                     <div *ngFor="let file of uploadedFiles" class="ui-fileupload-row">
                       <div (click)="op1.toggle($event)"> <img [src]="file.objectURL" width="50"></div>
                       <div> {{file.name}} </div>
-                      <div>{{file.size}} bytes</div>
+                      <div> {{file.size}} bytes</div>
                       <div>
                         <button pButton type="button" (click)="onDeleteLocalPoster()" icon="pi pi-times"></button>
                       </div>

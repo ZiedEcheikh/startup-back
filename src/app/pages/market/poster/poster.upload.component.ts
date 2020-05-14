@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { MenuItem } from 'primeng/api';
 
 import { SalePosterService, SaleService } from '../_service';

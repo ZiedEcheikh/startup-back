@@ -1,8 +1,15 @@
+import { SaleDetails } from './sale.details.model';
+import { Sale } from './sale.model';
+
 export class SaleProduct  {
     id: number;
     label: string;
     description?: string;
-    oldPrice?: number;
-    newPrice?: number;
-    pictures?: string[];
+    price?: number;
+    percentage?: number;
+    stock?: number;
+    saleParentId?: number;
+    userId?: string;
+    saleDetailsParent?: SaleDetails;
+    saleParent?: Sale;
 }

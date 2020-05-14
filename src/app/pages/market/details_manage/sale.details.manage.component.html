@@ -42,8 +42,8 @@
                       <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
                     <th style="width: 8em; text-align: center;">
-                      <button pButton type="button"  (click)="goCreateDetails()" icon="pi pi-plus"></button>
-                  </th>
+                      <button pButton type="button" (click)="goCreateDetails()" icon="pi pi-plus"></button>
+                    </th>
                   </tr>
 
                   <tr>
@@ -65,9 +65,10 @@
                     <td>{{rowData.label}}</td>
                     <td>{{rowData.description}}</td>
                     <td>
-                      <button pButton type="button"  class="ui-button-warning"  (click)="goUpdateDetails(rowData)" icon="pi pi-pencil"
-                        style="margin-right: .5em"></button>
-                      <button pButton type="button" class="ui-button-danger"  (click)="confirmDeleteGroupDetails(rowData)" icon="pi pi-trash"></button>
+                      <button pButton type="button" class="ui-button-warning" (click)="goUpdateDetails(rowData)"
+                        icon="pi pi-pencil" style="margin-right: .5em"></button>
+                      <button pButton type="button" class="ui-button-danger"
+                        (click)="confirmDeleteGroupDetails(rowData)" icon="pi pi-trash"></button>
                     </td>
                   </tr>
                 </ng-template>
@@ -88,7 +89,7 @@
             </div>
 
             <div class="p-col-3 p-md-3">
-              <button type="button"  (click)="goNext()" label="Suivant" pButton></button>
+              <button type="button" (click)="goNext()" label="Suivant" pButton></button>
             </div>
 
             <div class="p-col-3 p-md-3">

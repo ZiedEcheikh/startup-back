@@ -9,6 +9,9 @@ import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
 import { SaleDetailsCreateUpdateComponent } from './details_manage/create_update/sale.details.create.update.component';
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
+import { SaleProductCreateUpdateComponent } from './products_manage/create_update_product/product.create.update.component';
+import { ProductCriteriaComponent } from './products_manage/create_update_criteria/product.criteria.component';
+import { ProductPicturesComponent } from './products_manage/upload_pictures/product.pictures.component';
 const routes: Routes = [
 
   {
@@ -22,6 +25,9 @@ const routes: Routes = [
       { path: 'sale-details-manage', component: SaleDetailsManageComponent},
       { path: 'create-update-sale-details', component: SaleDetailsCreateUpdateComponent},
       { path: 'sale-products-manage', component: SaleProductsManageComponent},
+      { path: 'create-update-product', component: SaleProductCreateUpdateComponent},
+      { path: 'criteria-product', component: ProductCriteriaComponent},
+      { path: 'criteria-pictures', component: ProductPicturesComponent},
       { path: '', redirectTo: 'sale', pathMatch: 'full' },
       { path: '**', redirectTo: 'sale', pathMatch: 'full' },
     ]

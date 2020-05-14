@@ -14,6 +14,9 @@ import { SaleRecapComponent } from './recap/sale.recap.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
 import { SaleDetailsCreateUpdateComponent } from './details_manage/create_update/sale.details.create.update.component';
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
+import { SaleProductCreateUpdateComponent } from './products_manage/create_update_product/product.create.update.component';
+import { ProductCriteriaComponent } from './products_manage/create_update_criteria/product.criteria.component';
+import { ProductPicturesComponent } from './products_manage/upload_pictures/product.pictures.component';
 
 /*Services*/
 import { SaleService, SaleDetailsService, SaleProductService, SalePosterService, MenuService } from './_service';
@@ -21,7 +24,8 @@ import { SaleService, SaleDetailsService, SaleProductService, SalePosterService,
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
     SaleDetailsComponent, SaleRecapComponent,
-    SaleDetailsManageComponent, SaleDetailsCreateUpdateComponent, SaleProductsManageComponent],
+    SaleDetailsManageComponent, SaleDetailsCreateUpdateComponent, SaleProductsManageComponent,
+    SaleProductCreateUpdateComponent, ProductCriteriaComponent, ProductPicturesComponent],
   imports: [
     CommonModule,
     FormsModule,

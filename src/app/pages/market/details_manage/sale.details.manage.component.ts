@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, from } from 'rxjs';
 import { MenuItem } from 'primeng/api';
-
 import { SaleDetailsService, MenuService, SaleService } from '../_service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
 import { Sale } from '../_models';
 import { SaleDetails } from '../_models/sale.details.model';
 import { ErrorCode } from 'src/app/common';
-import { Observable } from 'rxjs';
-import { LoadingPageService } from 'src/app/theme';
-
+import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 
 @Component({
   selector: 'app-sale',

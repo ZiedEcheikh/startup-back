@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 
-import { SaleDetailsService, MenuService, SaleService } from '../../_service';
+import { SaleDetailsService, SaleService, MenuService } from '../../_service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
 import { Sale } from '../../_models';

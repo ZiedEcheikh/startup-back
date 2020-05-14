@@ -1,46 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { take, switchMap, tap } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SaleProduct, Sale } from '../_models';
+import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 
-import { SaleProduct } from '../_models';
-import { SaleProductService } from '../_service';
+import { SaleProductService, MenuService, SaleService } from '../_service';
 import { OverlayPanel } from 'primeng/overlaypanel/public_api';
+import { ErrorCode } from 'src/app/common';
+import { Observable } from 'rxjs';
 @Component({
-  selector: 'app-sale',
+  selector: 'app-product-manage',
   templateUrl: './sale.products.manage.component.html',
   styleUrls: ['./sale.products.manage.component.scss']
 })
 
 export class SaleProductsManageComponent implements OnInit {
-
-  types: SelectItem[];
+  stepsItems: MenuItem[];
   selectedType: string;
   uploadedFiles: any[] = [];
-  items: MenuItem[];
   currentProducts: SaleProduct[];
   selectedProduct: SaleProduct;
   cols: any[];
   images: any[];
-
-  constructor(private saleProductService: SaleProductService) {
-    this.types = [];
-    this.types.push({ label: 'Détails', value: 'details' });
-    this.types.push({ label: 'Produits', value: 'produits' });
-    this.items = [
-      { label: 'Vente' },
-      { label: 'Affiche' },
-      { label: 'Détails' },
-      { label: 'Récap' }
-    ];
+  isSale = false;
+  currentSaleId: number;
+  parentId: number;
+  currentSale: Sale;
+  display = false;
+  saleProductToDelete: SaleProduct;
+  constructor(private saleService: SaleService, private saleProductService: SaleProductService, private menuService: MenuService,
+    private loadingPageService: LoadingPageService, private route: ActivatedRoute, private router: Router) {
+    this.stepsItems = this.menuService.getItemsNewSaleSteps();
 
     this.cols = [
       { field: 'label', header: 'Labelle' },
       { field: 'description', header: 'Description' },
-      { field: 'oldPrice', header: 'Ancien prix' },
-      { field: 'newPrice', header: 'Nouveau prix' }
+      { field: 'price', header: 'Prix' },
+      { field: 'percentage', header: 'Réduction' },
+      { field: 'stock', header: 'Stock' }
     ];
-
-    this.currentProducts = this.saleProductService.getProductsOfDetails('1');
 
     this.images = [];
     this.images.push({
@@ -62,12 +61,82 @@ export class SaleProductsManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedType = null;
+    this.initialize().subscribe(parent => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+    },
+      errors => {
+        setTimeout(() => this.loadingPageService.dismiss(), 2000);
+        if (errors.error.errorCode === ErrorCode.NOT_SALE_EXIST) {
+          this.router.navigate(['/administrator/market/sale-add']);
+        }
+      }
+    );
+  }
+
+  initialize() {
+    this.loadingPageService.present();
+    return this.route.queryParams.pipe(
+      take(1),
+      switchMap(params => {
+        this.currentSaleId = params.saleId;
+        this.parentId = params.parentId;
+        this.isSale = params.nodeOfSale != null ? Boolean(JSON.parse(params.nodeOfSale)) : false;
+        return this.saleService.getSale(this.currentSaleId);
+      }),
+      take(1),
+      switchMap(sale => {
+        this.currentSale = sale;
+        if (this.isSale === true) {
+          return this.saleProductService.getProductsOfSale(this.parentId);
+        } else {
+          this.isSale = false;
+          return this.saleProductService.getProductsOfSaleDetails(this.parentId);
+        }
+      }),
+      take(1),
+      tap(data => {
+        this.currentProducts = data;
+      })
+    );
+  }
+  confirmDeleteProduct(saleProduct: SaleProduct) {
+    this.saleProductToDelete = saleProduct;
+    this.display = true;
+  }
+
+  onDeleteProduct() {
+    this.display = false;
+    this.loadingPageService.present();
+    let deleteObs: Observable<SaleProduct>;
+    deleteObs = this.saleProductService.deleteSaleProduct(this.saleProductToDelete.id);
+    deleteObs.subscribe(deletedSaleProduct => {
+      this.ngOnInit();
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+    }, err => {
+      setTimeout(() => this.loadingPageService.dismiss(), 2000);
+    });
+  }
+
+  goCreateProduct() {
+    this.router.navigate(['/administrator/market/create-update-product'],
+      { queryParams: { saleId: this.currentSaleId, parentId: this.parentId, nodeOfSale: this.isSale } });
+  }
+
+  goUpdateProduct(saleProduct: SaleProduct) {
+    this.router.navigate(['/administrator/market/create-update-product'],
+      { queryParams: { saleId: this.currentSaleId, parentId: this.parentId, productId: saleProduct.id, nodeOfSale: this.isSale } });
+  }
+  goNext() {
+    this.router.navigate(['/administrator/market/sale-recap'], { queryParams: { saleId: this.currentSaleId } });
+  }
+  goBack() {
+    this.router.navigate(['/administrator/market/sale-details'], { queryParams: { saleId: this.currentSaleId } });
   }
 
   showProduct(event, overlaypanel: OverlayPanel) {
     overlaypanel.toggle(event);
   }
+
   onUpload(event) {
     for (const file of event.files) {
       this.uploadedFiles.push(file);

@@ -19,7 +19,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PanelModule } from 'primeng/panel';
 import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
-
+import { ToolbarModule } from 'primeng/toolbar';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import {SplitButtonModule} from 'primeng/splitbutton';
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
   CalendarModule,
@@ -38,7 +40,10 @@ const PRIME_THEME_COMPONENTS = [
   OverlayPanelModule,
   PanelModule,
   MessageModule,
-  DialogModule
+  DialogModule,
+  ToolbarModule,
+  KeyFilterModule,
+  SplitButtonModule
 ];
 
 @NgModule({

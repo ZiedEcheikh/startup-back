@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 
+import { RestApiService } from '../../../common';
+import { AuthService } from '../../../auth/auth.service';
+
+import { RestConfig } from '../../../common/services/rest/rest.config';
 import { SaleProduct } from '../_models';
 
 
@@ -7,27 +13,60 @@ import { SaleProduct } from '../_models';
     providedIn: 'root'
 })
 export class SaleProductService {
-    saleProductsOfParent: SaleProduct[] = new Array();
 
-    initialize() {
-        let saleD1 = new SaleProduct();
-        saleD1.id = 1;
-        saleD1.label = 'chemise';
-        saleD1.description = 'meilleure';
-        saleD1.oldPrice = 90;
-        saleD1.newPrice = 70;
-        let saleD2 = new SaleProduct();
-        saleD2.id = 2;
-        saleD2.label = 'pantalon';
-        saleD2.description = 'meilleure';
-        saleD2.oldPrice = 100;
-        saleD2.newPrice = 50;
-        this.saleProductsOfParent.push(saleD1);
-        this.saleProductsOfParent.push(saleD2);
+    constructor(private restApiService: RestApiService, private authService: AuthService) { }
+
+    getProductsById(productId: number): Observable<SaleProduct> {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/products/' + productId);
+    }
+    addSaleProduct(saleProduct: SaleProduct): Observable<SaleProduct> {
+        return this.authService.userId
+        .pipe(
+            take(1),
+            switchMap(userId => {
+                if (!userId) {
+                    throw new Error('No user id found !');
+                }
+                saleProduct.userId = userId;
+                return this.restApiService.post(RestConfig.REST_MANAGE_API_HOST, '/products', saleProduct);
+            })
+        );
     }
 
-    getProductsOfDetails(parentId: string) {
-        this.initialize();
-        return this.saleProductsOfParent;
+    updateSaleProduct(saleProduct: SaleProduct): Observable<SaleProduct> {
+
+        return this.authService.userId
+            .pipe(
+                take(1),
+                switchMap(userId => {
+                    if (!userId) {
+                        throw new Error('No user id found !');
+                    }
+                    saleProduct.userId = userId;
+                    return this.restApiService.put(RestConfig.REST_MANAGE_API_HOST, '/products', saleProduct);
+                })
+            );
     }
+
+    deleteSaleProduct(productId: number) {
+        return this.restApiService.delete(RestConfig.REST_MANAGE_API_HOST, '/products/' + productId);
+    }
+
+    getProductsOfSale(saleId: number): Observable<SaleProduct> {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/products/sale/' + saleId);
+    }
+
+    getProductsOfSaleDetails(saleDetailsId: number) {
+        return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/products/sale/details/' + saleDetailsId);
+    }
+
+    getPicturesOfProduct(productId: number) {
+    }
+
+    addProductPicture() {
+    }
+
+    disablePictureOfProduct(productId: number) {
+    }
+
 }
