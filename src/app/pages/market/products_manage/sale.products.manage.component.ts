@@ -9,6 +9,7 @@ import { SaleProductService, MenuService, SaleService } from '../_service';
 import { OverlayPanel } from 'primeng/overlaypanel/public_api';
 import { ErrorCode } from 'src/app/common';
 import { Observable } from 'rxjs';
+import { SaleDetails } from '../_models/sale.details.model';
 @Component({
   selector: 'app-product-manage',
   templateUrl: './sale.products.manage.component.html',
@@ -29,6 +30,11 @@ export class SaleProductsManageComponent implements OnInit {
   currentSale: Sale;
   display = false;
   saleProductToDelete: SaleProduct;
+  selectedProductView: SaleProduct;
+  saleProductView: SaleProduct[];
+  indexProductView = 0;
+  items: MenuItem[];
+  marginStyle: any;
   constructor(private saleService: SaleService, private saleProductService: SaleProductService, private menuService: MenuService,
     private loadingPageService: LoadingPageService, private route: ActivatedRoute, private router: Router) {
     this.stepsItems = this.menuService.getItemsNewSaleSteps();
@@ -61,6 +67,20 @@ export class SaleProductsManageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.marginStyle = { top: '300px' };
+    this.items = [
+      {
+        label: 'Critéres', command: () => {
+          this.goProductCriterion();
+        }
+      },
+      {
+        label: 'Images', command: () => {
+          this.goProductPictures();
+        }
+      }
+    ];
+
     this.initialize().subscribe(parent => {
       setTimeout(() => this.loadingPageService.dismiss(), 2000);
     },
@@ -72,7 +92,9 @@ export class SaleProductsManageComponent implements OnInit {
       }
     );
   }
-
+  testContext() {
+    console.log(this.selectedProductView);
+  }
   initialize() {
     this.loadingPageService.present();
     return this.route.queryParams.pipe(
@@ -95,7 +117,7 @@ export class SaleProductsManageComponent implements OnInit {
       }),
       take(1),
       tap(data => {
-        this.currentProducts = data;
+        this.saleProductView = data;
       })
     );
   }
@@ -117,14 +139,93 @@ export class SaleProductsManageComponent implements OnInit {
     });
   }
 
-  goCreateProduct() {
-    this.router.navigate(['/administrator/market/create-update-product'],
-      { queryParams: { saleId: this.currentSaleId, parentId: this.parentId, nodeOfSale: this.isSale } });
+  public enableEditModeProduct(rowProduct: SaleProduct) {
+    rowProduct.editable = true;
+    rowProduct.actionEdit = true;
   }
 
-  goUpdateProduct(saleProduct: SaleProduct) {
-    this.router.navigate(['/administrator/market/create-update-product'],
-      { queryParams: { saleId: this.currentSaleId, parentId: this.parentId, productId: saleProduct.id, nodeOfSale: this.isSale } });
+  public disabelEditModeProduct(rowProduct) {
+    rowProduct.editable = false;
+    rowProduct.actionEdit = false;
+  }
+
+  public confirmUpdateProduct(rowProduct) {
+    let salProducteObs: Observable<SaleProduct>;
+    salProducteObs = this.saleProductService.updateSaleProduct(rowProduct);
+    salProducteObs.subscribe(restData => {
+      rowProduct.editable = false;
+      rowProduct.actionEdit = false;
+    }, errRes => {
+
+    });
+  }
+
+  public addProduct() {
+    const product = new SaleProduct();
+    product.label = '';
+
+    product.editable = true;
+    product.actionStore = true;
+    product.index = this.indexProductView++;
+    this.saleProductView.unshift(product);
+  }
+
+  public confirmStoreProduct(rowProduct) {
+    if (this.isSale) {
+      const parentSale = new Sale().buildSaleWithId(this.parentId);
+      rowProduct.saleParent = parentSale;
+    } else {
+      const parentSaleDetails = new SaleDetails();
+      parentSaleDetails.id = this.parentId;
+      rowProduct.saleDetailsParent = parentSaleDetails;
+    }
+    let salProducteObs: Observable<SaleProduct>;
+    salProducteObs = this.saleProductService.addSaleProduct(rowProduct);
+    salProducteObs.subscribe(restData => {
+      rowProduct.editable = false;
+      rowProduct.actionStore = false;
+      //TODO : toaster msg success save
+    }, errRes => {
+      //TODO : toaster msg error save
+    });
+  }
+
+  public ignoreStoreProduct(rowProduct: SaleProduct) {
+    this.deleteProductBy(rowProduct.index);
+    rowProduct.actionStore = false;
+  }
+
+  public deleteProductBy(index: number) {
+    for (let _i = 0; _i < this.saleProductView.length; _i++) {
+      if (this.saleProductView[_i].index === index) {
+        this.saleProductView.splice(_i, 1);
+      }
+    }
+  }
+  /** To clean*/
+
+  goProductCriterion() {
+    this.router.navigate(['/administrator/market/criterion'],
+      {
+        queryParams: {
+          saleId: this.currentSaleId,
+          parentId: this.parentId,
+          productId: this.selectedProductView.id,
+          nodeOfSale: this.isSale
+        }
+      });
+  }
+
+  goProductPictures() {
+    this.router.navigate(['/administrator/market/pictures'],
+      {
+        queryParams: {
+          saleId: this.currentSaleId,
+          parentId: this.parentId,
+          productId: this.selectedProductView.id,
+          nodeOfSale: this.isSale
+        }
+      });
   }
   goNext() {
     this.router.navigate(['/administrator/market/sale-recap'], { queryParams: { saleId: this.currentSaleId } });

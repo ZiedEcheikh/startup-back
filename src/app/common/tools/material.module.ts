@@ -21,7 +21,8 @@ import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { KeyFilterModule } from 'primeng/keyfilter';
-import {SplitButtonModule} from 'primeng/splitbutton';
+import {CardModule} from 'primeng/card';
+
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
   CalendarModule,
@@ -43,7 +44,7 @@ const PRIME_THEME_COMPONENTS = [
   DialogModule,
   ToolbarModule,
   KeyFilterModule,
-  SplitButtonModule
+  CardModule,
 ];
 
 @NgModule({

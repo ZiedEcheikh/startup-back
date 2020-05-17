@@ -12,4 +12,8 @@ export class SaleProduct  {
     userId?: string;
     saleDetailsParent?: SaleDetails;
     saleParent?: Sale;
+    index?: number;
+    editable ? = false;
+    actionEdit ? = false;
+    actionStore ? = false;
 }

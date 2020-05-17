@@ -35,7 +35,7 @@
               <p-tree [value]="treeSaleDetails" (onNodeSelect)="nodeSelect($event)" layout="horizontal"
                 selectionMode="single" [(selection)]="selectedDetail"
                 (onNodeContextMenuSelect)="contextMenu($event.node)" [contextMenu]="cm"></p-tree>
-              <p-contextMenu #cm [model]="menus" [style]="{'width':'12.5em'}"></p-contextMenu>
+              <p-contextMenu #cm [model]="menus"  appendTo="body" [style]="{'width':'12.5em'}"></p-contextMenu>
             </div>
 
             <div class="p-col-1 p-md-1">

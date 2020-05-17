@@ -1,5 +1,5 @@
-import { Sale } from './sale.model';
-import { SaleDetails } from './sale.details.model';
+import { Sale } from '../sale.model';
+import { SaleDetails } from '../sale.details.model';
 
 export class NodeTreeSaleDetails  {
     id?: number;
