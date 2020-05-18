@@ -167,6 +167,9 @@ export class SaleProductsManageComponent implements OnInit {
     product.editable = true;
     product.actionStore = true;
     product.index = this.indexProductView++;
+    if (this.saleProductView == null) {
+      this.saleProductView = new Array();
+    }
     this.saleProductView.unshift(product);
   }
 

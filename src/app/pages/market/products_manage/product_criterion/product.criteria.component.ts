@@ -279,4 +279,9 @@ export class ProductCriteriaComponent implements OnInit {
             setTimeout(() => this.loadingPageService.dismiss(), 2000);
         });
     }
+
+    goProductsManage() {
+        this.router.navigate(['/administrator/market/sale-products-manage'],
+            {queryParams: {saleId: this.currentSaleId , parentId: this.parentId, nodeOfSale: this.isSale } });
+    }
 }

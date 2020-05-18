@@ -18,7 +18,10 @@ import { ProductCriteriaComponent } from './products_manage/product_criterion/pr
 import { ProductPicturesComponent } from './products_manage/product_pictures/product.pictures.component';
 
 /*Services*/
-import { SaleService, SaleDetailsService, SaleProductService, SalePosterService, ProductCriteriaService, MenuService } from './_service';
+import {
+  SaleService, SaleDetailsService, SaleProductService,
+  SalePosterService, ProductCriteriaService, ProductPictureService, MenuService
+} from './_service';
 
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
@@ -37,6 +40,7 @@ import { SaleService, SaleDetailsService, SaleProductService, SalePosterService,
     SaleProductService,
     SalePosterService,
     ProductCriteriaService,
+    ProductPictureService,
     MenuService
   ]
 })

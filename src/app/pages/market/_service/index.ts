@@ -5,3 +5,4 @@ export * from './sale.categories.service';
 export * from './sale.poster.service';
 export * from './menu.service';
 export * from './product.criteria.service';
+export * from './product.picture.service';

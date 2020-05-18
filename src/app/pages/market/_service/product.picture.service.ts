@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SalePosterData } from '../_models';
+import { ProductPictureData } from '../_models';
 import { RestApiService } from '../../../common';
 import { RestConfig } from '../../../common/services/rest/rest.config';
 
@@ -10,11 +10,11 @@ import { switchMap, take } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class SalePosterService {
+export class ProductPictureService {
 
     constructor(private restApiService: RestApiService, private authService: AuthService) { }
 
-    uploadPosterSale(image: File, saleId: string): Observable<SalePosterData> {
+    uploadProductPicture(image: File, productId: string): Observable<ProductPictureData> {
         return this.authService.userId
             .pipe(
                 take(1),
@@ -25,16 +25,16 @@ export class SalePosterService {
                     const uploadData = new FormData();
                     uploadData.append('file', image);
                     return this.restApiService.post(RestConfig.REST_FILES_API_HOST,
-                        '/sale/posters/upload?saleId=' + saleId + '&userId=' + userId, uploadData);
+                        '/product/pictures/upload?productId=' + productId + '&userId=' + userId, uploadData);
                 })
             );
     }
 
-    getPosterOfSale( saleId: string): Observable<SalePosterData> {
-        return this.restApiService.get(RestConfig.REST_FILES_API_HOST, '/sale/posters/' + saleId);
+    getProductPictures(productId: string): Observable<ProductPictureData> {
+        return this.restApiService.get(RestConfig.REST_FILES_API_HOST, '/product/pictures/' + productId);
     }
 
-    deletePosterOfSale( saleId: string): Observable<SalePosterData> {
-        return this.restApiService.delete(RestConfig.REST_FILES_API_HOST, '/sale/posters/' + saleId);
+    deleteProductPicture(productId: string): Observable<ProductPictureData> {
+        return this.restApiService.delete(RestConfig.REST_FILES_API_HOST, '/product/pictures/' + productId);
     }
 }

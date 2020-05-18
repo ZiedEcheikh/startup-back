@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuService } from '../../_service';
+import { MenuItem } from 'primeng/api/menuitem';
 
 @Component({
     selector: 'app-sale-product-pictures',
@@ -7,6 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ProductPicturesComponent implements OnInit {
+    stepsItems: MenuItem[];
+
+    constructor(private menuService: MenuService) {
+        this.stepsItems = this.menuService.getItemsNewSaleSteps();
+    }
+
     ngOnInit(): void {
     }
 }

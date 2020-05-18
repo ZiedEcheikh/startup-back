@@ -1,6 +1,6 @@
 {
   "/start/*": {
-    "target": "http://localhost:8383/start",
+    "target": "http://192.168.80.128:8383/start",
     "secure": false,
     "pathRewrite": {
       "^/start/*": ""
@@ -9,7 +9,7 @@
     "logLevel": "debug"
   },
   "/manage/*": {
-    "target": "http://localhost:8484/manage",
+    "target": "http://192.168.80.128:8484/manage",
     "secure": false,
     "pathRewrite": {
       "^/manage/*": ""
@@ -19,7 +19,7 @@
   },
 
   "/files/*": {
-    "target": "http://localhost:8081/files",
+    "target": "http://192.168.80.128:8081/files",
     "secure": false,
     "pathRewrite": {
       "^/files/*": ""
