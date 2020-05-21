@@ -7,7 +7,6 @@ import { PosterUploadComponent } from './poster/poster.upload.component';
 import { SaleRecapComponent } from './recap/sale.recap.component';
 import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
-import { SaleDetailsCreateUpdateComponent } from './details_manage/create_update/sale.details.create.update.component';
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 import { ProductCriteriaComponent } from './products_manage/product_criterion/product.criteria.component';
 import { ProductPicturesComponent } from './products_manage/product_pictures/product.pictures.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
       { path: 'sale-details', component: SaleDetailsComponent },
       { path: 'sale-recap', component: SaleRecapComponent },
       { path: 'sale-details-manage', component: SaleDetailsManageComponent},
-      { path: 'create-update-sale-details', component: SaleDetailsCreateUpdateComponent},
       { path: 'sale-products-manage', component: SaleProductsManageComponent},
       { path: 'criterion', component: ProductCriteriaComponent},
       { path: 'pictures', component: ProductPicturesComponent},

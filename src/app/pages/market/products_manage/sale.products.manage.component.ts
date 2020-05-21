@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { take, switchMap, tap } from 'rxjs/operators';
+import { take, switchMap, tap, concatMap, mergeMap } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SaleProduct, Sale } from '../_models';
+import { SaleProduct, Sale, ProductPictureData } from '../_models';
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
-
-import { SaleProductService, MenuService, SaleService } from '../_service';
+import { RestConfig } from '../../../common/services/rest/rest.config';
+import { SaleProductService, MenuService, SaleService, ProductPictureService } from '../_service';
 import { OverlayPanel } from 'primeng/overlaypanel/public_api';
 import { ErrorCode } from 'src/app/common';
-import { Observable } from 'rxjs';
+import { Observable, from, pipe } from 'rxjs';
 import { SaleDetails } from '../_models/sale.details.model';
 @Component({
   selector: 'app-product-manage',
@@ -34,9 +34,13 @@ export class SaleProductsManageComponent implements OnInit {
   saleProductView: SaleProduct[];
   indexProductView = 0;
   items: MenuItem[];
-  marginStyle: any;
-  constructor(private saleService: SaleService, private saleProductService: SaleProductService, private menuService: MenuService,
-    private loadingPageService: LoadingPageService, private route: ActivatedRoute, private router: Router) {
+  constructor(private saleService: SaleService,
+    private saleProductService: SaleProductService,
+    private productPictureService: ProductPictureService,
+    private menuService: MenuService,
+    private loadingPageService: LoadingPageService,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.stepsItems = this.menuService.getItemsNewSaleSteps();
 
     this.cols = [
@@ -67,7 +71,6 @@ export class SaleProductsManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.marginStyle = { top: '300px' };
     this.items = [
       {
         label: 'Critéres', command: () => {
@@ -116,11 +119,42 @@ export class SaleProductsManageComponent implements OnInit {
         }
       }),
       take(1),
-      tap(data => {
+      mergeMap(data => {
         this.saleProductView = data;
+        return from(this.saleProductView).pipe(
+          concatMap(product => this.productPictureService.getProductPictures(product.id)));
+      }),
+      pipe(),
+      tap(pictures => {
+        this.addPicturesToProduct(pictures);
       })
     );
   }
+  addPicturesToProduct(productPictures: ProductPictureData[]) {
+    const idProduct = productPictures[0].productId;
+    for (const product of this.saleProductView) {
+      if (product.id === idProduct) {
+
+        for (const picture of productPictures) {
+          picture.source = RestConfig.FILES_HOST + picture.picturePath + picture.pictureName;
+          picture.thumbnail = RestConfig.FILES_HOST + picture.picturePath + picture.thumbnail;
+          picture.title = product.label;
+        }
+        product.havePictures = true;
+        product.productPictures = productPictures;
+      }
+    }
+    for (const product of this.saleProductView) {
+      if ( !product.havePictures) {
+        product.productPictures = [];
+        const emptyPicture = new ProductPictureData();
+        emptyPicture.title = 'Produits sans images';
+        emptyPicture.alt = 'Produits sans images';
+        product.productPictures.unshift(emptyPicture);
+      }
+    }
+  }
+
   confirmDeleteProduct(saleProduct: SaleProduct) {
     this.saleProductToDelete = saleProduct;
     this.display = true;
@@ -187,9 +221,9 @@ export class SaleProductsManageComponent implements OnInit {
     salProducteObs.subscribe(restData => {
       rowProduct.editable = false;
       rowProduct.actionStore = false;
-      //TODO : toaster msg success save
+      // TODO : toaster msg success save
     }, errRes => {
-      //TODO : toaster msg error save
+      // TODO : toaster msg error save
     });
   }
 

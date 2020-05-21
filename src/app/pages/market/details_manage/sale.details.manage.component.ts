@@ -28,6 +28,7 @@ export class SaleDetailsManageComponent implements OnInit {
   saleDetailsToDelete: SaleDetails;
   fetchSaleId: number;
   display = false;
+  indexSaleDetails = 0;
   constructor(private saleService: SaleService, private saleDetailsService: SaleDetailsService, private menuService: MenuService,
     private route: ActivatedRoute, private router: Router, private loadingPageService: LoadingPageService) {
     this.stepsItems = this.menuService.getItemsNewSaleSteps();
@@ -101,14 +102,70 @@ export class SaleDetailsManageComponent implements OnInit {
     this.display = true;
   }
 
-  goCreateDetails() {
-    this.router.navigate(['/administrator/market/create-update-sale-details'],
-      { queryParams: { saleId: this.fetchSaleId, parentId: this.parentId, nodeOfSale: this.isSale } });
+
+  public enableEditModeSaleDetails(rowSaleDetails: SaleDetails) {
+    rowSaleDetails.editable = true;
+    rowSaleDetails.actionEdit = true;
   }
 
-  goUpdateDetails(saleDetails: SaleDetails) {
-    this.router.navigate(['/administrator/market/create-update-sale-details'],
-      { queryParams: { saleId: this.fetchSaleId, parentId: this.parentId, detailsId: saleDetails.id, nodeOfSale: this.isSale } });
+  public disabelEditModeSaleDetails(rowProduct: SaleDetails) {
+    rowProduct.editable = false;
+    rowProduct.actionEdit = false;
+  }
+
+  confirmUpdateSaleDetails(rowSaleDetails: SaleDetails) {
+    let salProducteObs: Observable<SaleDetails>;
+    salProducteObs = this.saleDetailsService.updateSaleDetails(rowSaleDetails);
+    salProducteObs.subscribe(restData => {
+      rowSaleDetails.editable = false;
+      rowSaleDetails.actionEdit = false;
+    }, errRes => {
+    });
+  }
+  addGroupDetails() {
+    const saleDetails = new SaleDetails();
+    saleDetails.label = '';
+
+    saleDetails.editable = true;
+    saleDetails.actionStore = true;
+    saleDetails.index = this.indexSaleDetails++;
+    if (this.listDetails == null) {
+      this.listDetails = new Array();
+    }
+    this.listDetails.unshift(saleDetails);
+  }
+
+  confirmStoreSaleDetails(rowSaleDetails: SaleDetails) {
+    if (this.isSale) {
+      const sale = new Sale().buildSaleWithId(this.currentSale.id);
+      rowSaleDetails.sale = sale;
+    } else {
+      const parentSaleDetail = new SaleDetails();
+      parentSaleDetail.id = this.parentId;
+      rowSaleDetails.parent = parentSaleDetail;
+    }
+
+    let saleObs: Observable<SaleDetails>;
+    saleObs = this.saleDetailsService.addSaleDetails(rowSaleDetails);
+    saleObs.subscribe(restData => {
+      rowSaleDetails.editable = false;
+      rowSaleDetails.actionStore = false;
+    }, errRes => {
+      console.log(errRes);
+    });
+  }
+
+  public ignoreStoreGroupDetails(rowSaleDetails: SaleDetails) {
+    this.deleteSaleDetailsBy(rowSaleDetails.index);
+    rowSaleDetails.actionStore = false;
+  }
+
+  public deleteSaleDetailsBy(index: number) {
+    for (let _i = 0; _i < this.listDetails.length; _i++) {
+      if (this.listDetails[_i].index === index) {
+        this.listDetails.splice(_i, 1);
+      }
+    }
   }
   goNext() {
     this.router.navigate(['/administrator/market/sale-recap'], { queryParams: { saleId: this.fetchSaleId } });

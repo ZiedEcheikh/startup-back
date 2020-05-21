@@ -1,5 +1,6 @@
 import { SaleDetails } from './sale.details.model';
 import { Sale } from './sale.model';
+import { ProductPictureData } from '.';
 
 export class SaleProduct  {
     id: number;
@@ -16,4 +17,6 @@ export class SaleProduct  {
     editable ? = false;
     actionEdit ? = false;
     actionStore ? = false;
+    havePictures ? = false;
+    productPictures: ProductPictureData[];
 }

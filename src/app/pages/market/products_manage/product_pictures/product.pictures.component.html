@@ -19,3 +19,115 @@
     </div>
   </div>
 </div>
+
+
+<div class="p-grid ui-fluid">
+  <div class="p-col-12 p-lg-12">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card card-w-title">
+          <h1>Les images</h1>
+
+          <div class="p-grid form-group block-marge">
+            <div class="p-col-2 p-md-2">
+            </div>
+            <div class="p-col-8 p-md-8">
+              <p-fileUpload #form name="demo" chooseLabel="Choisir" [showUploadButton]="false"
+                [showCancelButton]="false" (onSelect)="onProductPictureSelect($event)" customUpload="true">
+
+                <ng-template let-file pTemplate="file">
+                  <ul *ngIf="productPicturesToUpload.length">
+                    <div *ngFor="let productPicture of productPicturesToUpload" class="ui-fileupload-row">
+                      <div (click)="op1.toggle($event)">
+                        <img [src]="file.objectURL" width="50">
+                      </div>
+                      <div> {{productPicture.name}} </div>
+                      <div> {{productPicture.size}} bytes</div>
+
+                      <div>
+                        <p-dropdown [options]="picturesRank" [(ngModel)]="productPicture.rank"
+                          placeholder="Selectionné le rang *" #rankCtrl="ngModel" #rankCtrl filterBy="value.label"
+                          optionLabel="label" name="rank" required>
+                        </p-dropdown>
+
+                        <p-message *ngIf="(!rankCtrl.valid && rankCtrl.touched) || !productPicture.haveRank"
+                          severity="error" text="Le Rang est obligatoire"></p-message>
+                      </div>
+
+                      <div>
+                        <button pButton type="button" (click)="onDeleteLocalPicture(productPicture)"
+                          icon="pi pi-times"></button>
+                      </div>
+                      <div>
+                        <button pButton type="button" (click)="onUploadProductPicture(productPicture)"
+                          icon="pi pi-upload"></button>
+                      </div>
+                      <div>
+                      </div>
+                      <p-overlayPanel appendTo="body" #op1>
+                        <img [src]="file.objectURL" width="442" height="182" style="z-index: 10000000;"
+                          alt="Nature 1" />
+                      </p-overlayPanel>
+                    </div>
+                  </ul>
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <ul *ngIf="productPicturesStored.length">
+                    <div *ngFor="let storageProductPicture of productPicturesStored" class="ui-fileupload-row">
+                      <div (click)="op1.toggle($event)">
+                        <img
+                          src="{{fileServerUrl}}{{storageProductPicture.picturePath}}{{storageProductPicture.pictureName}}"
+                          width="50"></div>
+                      <div> {{storageProductPicture.pictureName}} </div>
+                      <div> Rang : {{storageProductPicture.rank}} </div>
+                      <div>
+                        <button pButton type="button" (click)="onDeletePicture(storageProductPicture)"
+                          icon="pi pi-trash" class="ui-button-danger"></button>
+                      </div>
+
+                      <p-overlayPanel appendTo="body" #op1>
+                        <img
+                          src="{{fileServerUrl}}{{storageProductPicture.picturePath}}{{storageProductPicture.pictureName}}"
+                          width="442" height="182" style="z-index: 10000000;" alt="Nature 1" />
+                      </p-overlayPanel>
+
+                    </div>
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
+
+            </div>
+
+            <div class="p-col-2 p-md-2">
+            </div>
+          </div>
+
+          <div class="p-grid form-group">
+            <div class="p-col-3 p-md-3">
+            </div>
+
+            <div class="p-col-6 p-md-6">
+              <button type="button" (click)="goProductsManage()" label="Valider" pButton></button>
+            </div>
+
+            <div class="p-col-3 p-md-3">
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Confirmation" [(visible)]="confirmDeletePicture" modal="true" showEffect="fade"
+  [style]="{width: '400px'}">
+  <p style="margin-top: 1em; margin-bottom: 1em">
+    Voulez-vous supprimer le critére ?
+  </p>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="onDeleteProductPicture()" label="Oui"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="confirmDeletePicture=false" label="Non"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

@@ -12,7 +12,6 @@ import { PosterUploadComponent } from './poster/poster.upload.component';
 import { SaleDetailsComponent } from './details/sale.details.component';
 import { SaleRecapComponent } from './recap/sale.recap.component';
 import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
-import { SaleDetailsCreateUpdateComponent } from './details_manage/create_update/sale.details.create.update.component';
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 import { ProductCriteriaComponent } from './products_manage/product_criterion/product.criteria.component';
 import { ProductPicturesComponent } from './products_manage/product_pictures/product.pictures.component';
@@ -26,7 +25,7 @@ import {
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
     SaleDetailsComponent, SaleRecapComponent,
-    SaleDetailsManageComponent, SaleDetailsCreateUpdateComponent, SaleProductsManageComponent,
+    SaleDetailsManageComponent, SaleProductsManageComponent,
     ProductCriteriaComponent, ProductPicturesComponent],
   imports: [
     CommonModule,

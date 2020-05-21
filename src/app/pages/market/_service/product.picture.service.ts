@@ -14,7 +14,7 @@ export class ProductPictureService {
 
     constructor(private restApiService: RestApiService, private authService: AuthService) { }
 
-    uploadProductPicture(image: File, productId: string): Observable<ProductPictureData> {
+    uploadProductPicture(image: File, pictureRank: number, productId: number): Observable<ProductPictureData> {
         return this.authService.userId
             .pipe(
                 take(1),
@@ -25,16 +25,18 @@ export class ProductPictureService {
                     const uploadData = new FormData();
                     uploadData.append('file', image);
                     return this.restApiService.post(RestConfig.REST_FILES_API_HOST,
-                        '/product/pictures/upload?productId=' + productId + '&userId=' + userId, uploadData);
+                        '/product/pictures/upload?productId=' + productId
+                        + '&pictureRank=' + pictureRank
+                        + '&userId=' + userId, uploadData);
                 })
             );
     }
 
-    getProductPictures(productId: string): Observable<ProductPictureData> {
+    getProductPictures(productId: number): Observable<ProductPictureData[]> {
         return this.restApiService.get(RestConfig.REST_FILES_API_HOST, '/product/pictures/' + productId);
     }
 
-    deleteProductPicture(productId: string): Observable<ProductPictureData> {
+    deleteProductPicture(productId: number): Observable<ProductPictureData> {
         return this.restApiService.delete(RestConfig.REST_FILES_API_HOST, '/product/pictures/' + productId);
     }
 }

@@ -28,8 +28,11 @@ export class SaleAddComponent implements OnInit {
   fetchSaleId: string;
   currentDateTime: Date;
   description: string;
-  constructor(private saleCategoriesService: SaleCategoriesService, private route: ActivatedRoute, private router: Router,
-    private saleService: SaleService, private loadingPageService: LoadingPageService) {
+  constructor(private saleCategoriesService: SaleCategoriesService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private saleService: SaleService,
+              private loadingPageService: LoadingPageService) {
 
     this.currentDateTime = new Date();
     this.items = [

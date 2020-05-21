@@ -33,7 +33,7 @@
             </div>
 
             <div class="p-col-8 p-md-8">
-              <p-fileUpload #form name="demo[]" [disabled]="isHavePoster" chooseLabel="Choisir"
+              <p-fileUpload #form name="demo" [disabled]="isHavePoster" chooseLabel="Choisir"
                 uploadLabel="Télécharger" [showCancelButton]="false" [showUploadButton]="!isHavePoster"
                 (onSelect)="onFileSelect($event)" customUpload="true" (uploadHandler)="onUploadHandler($event, form)">
 

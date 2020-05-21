@@ -32,7 +32,8 @@
 
             <div class="p-col-10 p-md-10">
               <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="saleProductView" [paginator]="true"
-                [rows]="5" dataKey="label" selectionMode="single" [(selection)]="selectedProductView" [contextMenu]="cm" contextMenuSelectionMode="joint">
+                [rows]="5" dataKey="label" selectionMode="single" [(selection)]="selectedProductView" [contextMenu]="cm"
+                contextMenuSelectionMode="joint">
                 <ng-template pTemplate="header" let-columns>
                   <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
@@ -69,7 +70,9 @@
 
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
-                    <td *ngIf="!rowData.editable" (click)="showProduct($event,op3)">{{rowData.label}}</td>
+                    <td *ngIf="!rowData.editable" (click)="showProduct($event,op3)">{{rowData.label}}
+                   
+                    </td>
                     <td *ngIf="rowData.editable">
                       <textarea [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize"
                         [(ngModel)]="rowData.label" name="label" required #labelCtrl="ngModel"></textarea>
@@ -109,18 +112,26 @@
                       <button *ngIf="!rowData.actionEdit && !rowData.actionStore" pButton type="button"
                         class="ui-button-danger" (click)="confirmDeleteProduct(rowData)" icon="pi pi-trash"></button>
 
-                      <button *ngIf="rowData.actionEdit"  [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button" class="ui-button-success"
-                        (click)="confirmUpdateProduct(rowData)" icon="pi pi-refresh"
+                      <button *ngIf="rowData.actionEdit"
+                        [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button"
+                        class="ui-button-success" (click)="confirmUpdateProduct(rowData)" icon="pi pi-refresh"
                         style="margin-right: .5em"></button>
-                      <button *ngIf="rowData.actionEdit" [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button" class="ui-button-danger"
-                        (click)="disabelEditModeProduct(rowData)" icon="pi pi-times"></button>
-                        
-  
-                      <button *ngIf="rowData.actionStore" [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button" class="ui-button-success"
-                        (click)="confirmStoreProduct(rowData)" icon="pi pi-save" style="margin-right: .5em"></button>
+                      <button *ngIf="rowData.actionEdit"
+                        [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button"
+                        class="ui-button-danger" (click)="disabelEditModeProduct(rowData)" icon="pi pi-times"></button>
+
+
+                      <button *ngIf="rowData.actionStore"
+                        [disabled]="rowData.label.length == 0 || rowData.price.length == 0" pButton type="button"
+                        class="ui-button-success" (click)="confirmStoreProduct(rowData)" icon="pi pi-save"
+                        style="margin-right: .5em"></button>
                       <button *ngIf="rowData.actionStore" pButton type="button" class="ui-button-danger"
                         (click)="ignoreStoreProduct(rowData)" icon="pi pi-times"></button>
+                        <p-overlayPanel [baseZIndex]="9999999" appendTo="body" #op3>
+                          <p-lightbox [images]="rowData.productPictures"></p-lightbox>
+                        </p-overlayPanel>
                     </td>
+
                   </tr>
                 </ng-template>
               </p-table>
@@ -128,9 +139,6 @@
             </div>
 
 
-            <p-overlayPanel [baseZIndex]="9999999" appendTo="body" [style]="marginStyle" #op3>
-              <p-lightbox [images]="images"></p-lightbox>
-            </p-overlayPanel>
 
             <div class="p-col-1 p-md-1">
             </div>

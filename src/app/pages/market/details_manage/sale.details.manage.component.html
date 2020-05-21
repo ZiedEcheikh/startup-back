@@ -42,7 +42,7 @@
                       <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
                     <th style="width: 8em; text-align: center;">
-                      <button pButton type="button" (click)="goCreateDetails()" icon="pi pi-plus"></button>
+                      <button pButton type="button"  (click)="addGroupDetails()" icon="pi pi-plus"></button>
                     </th>
                   </tr>
 
@@ -62,13 +62,45 @@
 
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
-                    <td>{{rowData.label}}</td>
-                    <td>{{rowData.description}}</td>
+                    <td *ngIf="!rowData.editable">
+                      {{rowData.label}}
+                    </td>
+                    <td *ngIf="rowData.editable">
+                      <textarea [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize"
+                        [(ngModel)]="rowData.label" name="label" required #labelCtrl="ngModel"></textarea>
+                      <p-message *ngIf="!labelCtrl.valid && labelCtrl.touched" severity="error"
+                        text="Libellé obligatoire">
+                      </p-message>
+                    </td>
+                    <td *ngIf="!rowData.editable">{{rowData.description}}</td>
+                    <td *ngIf="rowData.editable">
+
+                      <textarea [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize"
+                        [(ngModel)]="rowData.description" name="description" #descriptionCtrl="ngModel"></textarea>
+
+                    </td>
                     <td>
-                      <button pButton type="button" class="ui-button-warning" (click)="goUpdateDetails(rowData)"
-                        icon="pi pi-pencil" style="margin-right: .5em"></button>
-                      <button pButton type="button" class="ui-button-danger"
-                        (click)="confirmDeleteGroupDetails(rowData)" icon="pi pi-trash"></button>
+                      <button *ngIf="!rowData.actionEdit && !rowData.actionStore" pButton type="button"
+                        class="ui-button-warning" (click)="enableEditModeSaleDetails(rowData)" icon="pi pi-pencil"
+                        style="margin-right: .5em"></button>
+                      <button *ngIf="!rowData.actionEdit && !rowData.actionStore" pButton type="button"
+                        class="ui-button-danger" (click)="confirmDeleteGroupDetails(rowData)" icon="pi pi-trash"></button>
+
+                      <button *ngIf="rowData.actionEdit"
+                        [disabled]="rowData.label.length == 0" pButton type="button"
+                        class="ui-button-success" (click)="confirmUpdateSaleDetails(rowData)" icon="pi pi-refresh"
+                        style="margin-right: .5em"></button>
+                      <button *ngIf="rowData.actionEdit"
+                        [disabled]="rowData.label.length == 0" pButton type="button"
+                        class="ui-button-danger" (click)="disabelEditModeSaleDetails(rowData)" icon="pi pi-times"></button>
+
+
+                      <button *ngIf="rowData.actionStore"
+                        [disabled]="rowData.label.length == 0" pButton type="button"
+                        class="ui-button-success" (click)="confirmStoreSaleDetails(rowData)" icon="pi pi-save"
+                        style="margin-right: .5em"></button>
+                      <button *ngIf="rowData.actionStore" pButton type="button" class="ui-button-danger"
+                        (click)="ignoreStoreGroupDetails(rowData)" icon="pi pi-times"></button>
                     </td>
                   </tr>
                 </ng-template>

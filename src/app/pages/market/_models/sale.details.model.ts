@@ -11,4 +11,8 @@ export class SaleDetails {
     parent?: SaleDetails;
     detailsProducts: boolean;
     detailsWithProducts: boolean;
+    index?: number;
+    editable ? = false;
+    actionEdit ? = false;
+    actionStore ? = false;
 }
