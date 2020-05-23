@@ -67,7 +67,7 @@ export class SaleAddComponent implements OnInit {
     return this.route.queryParams.pipe(
       take(1),
       switchMap(params => {
-        if ( params.saleId) {
+        if (params.saleId) {
           return this.saleService.getSale(params.saleId);
         }
       })

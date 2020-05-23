@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Injectable({
     providedIn: 'root'
 })
-export class MenuService {
+export class MarketMenuService {
 
     constructor(private router: Router) {
 

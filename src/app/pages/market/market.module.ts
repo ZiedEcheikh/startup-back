@@ -15,18 +15,18 @@ import { SaleDetailsManageComponent } from './details_manage/sale.details.manage
 import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
 import { ProductCriteriaComponent } from './products_manage/product_criterion/product.criteria.component';
 import { ProductPicturesComponent } from './products_manage/product_pictures/product.pictures.component';
-
+import { CustomDatePipe } from '../../common/pipes/custom.date.pipe';
 /*Services*/
 import {
   SaleService, SaleDetailsService, SaleProductService,
-  SalePosterService, ProductCriteriaService, ProductPictureService, MenuService
+  SalePosterService, ProductCriteriaService, ProductPictureService, MarketMenuService
 } from './_service';
 
 @NgModule({
   declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
     SaleDetailsComponent, SaleRecapComponent,
     SaleDetailsManageComponent, SaleProductsManageComponent,
-    ProductCriteriaComponent, ProductPicturesComponent],
+    ProductCriteriaComponent, ProductPicturesComponent, CustomDatePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -40,7 +40,7 @@ import {
     SalePosterService,
     ProductCriteriaService,
     ProductPictureService,
-    MenuService
+    MarketMenuService
   ]
 })
 export class MarketModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { take, switchMap, tap } from 'rxjs/operators';
-import { SaleProductService, ProductCriteriaService, MenuService } from '../../_service';
+import { SaleProductService, ProductCriteriaService, MarketMenuService } from '../../_service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingPageService } from 'src/app/theme';
 import { MenuItem } from 'primeng/api/menuitem';
@@ -33,11 +33,11 @@ export class ProductCriteriaComponent implements OnInit {
     indexChoice = 0;
     constructor(private saleProductService: SaleProductService,
         private productCriteriaService: ProductCriteriaService,
-        private menuService: MenuService,
+        private marketMenuService: MarketMenuService,
         private route: ActivatedRoute,
         private router: Router,
         private loadingPageService: LoadingPageService) {
-        this.stepsItems = this.menuService.getItemsNewSaleSteps();
+        this.stepsItems = this.marketMenuService.getItemsNewSaleSteps();
     }
 
     ngOnInit() {

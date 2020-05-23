@@ -32,7 +32,8 @@ import { MenuService } from '../theme/menu/app.menu.service';
     AppRightPanelComponent,
     AppBreadcrumbComponent,
     AppFooterComponent,
-    AppConfigComponent, AppLodingPageComponent],
+    AppConfigComponent,
+    AppLodingPageComponent],
   imports: [
     CommonModule,
     FormsModule,

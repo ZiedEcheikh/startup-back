@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { MenuItem } from 'primeng/api';
-import { SaleDetailsService, MenuService, SaleService } from '../_service';
+import { SaleDetailsService, MarketMenuService, SaleService } from '../_service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
 import { Sale } from '../_models';
@@ -29,9 +29,12 @@ export class SaleDetailsManageComponent implements OnInit {
   fetchSaleId: number;
   display = false;
   indexSaleDetails = 0;
-  constructor(private saleService: SaleService, private saleDetailsService: SaleDetailsService, private menuService: MenuService,
-    private route: ActivatedRoute, private router: Router, private loadingPageService: LoadingPageService) {
-    this.stepsItems = this.menuService.getItemsNewSaleSteps();
+  constructor(private saleService: SaleService,
+              private saleDetailsService: SaleDetailsService,
+              private marketMenuService: MarketMenuService,
+              private route: ActivatedRoute, private router: Router,
+              private loadingPageService: LoadingPageService) {
+    this.stepsItems = this.marketMenuService.getItemsNewSaleSteps();
 
     this.cols = [
       { field: 'label', header: 'Labelle' },

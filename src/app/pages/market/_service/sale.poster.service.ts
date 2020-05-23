@@ -30,11 +30,11 @@ export class SalePosterService {
             );
     }
 
-    getPosterOfSale( saleId: string): Observable<SalePosterData> {
+    getPosterOfSale( saleId: number): Observable<SalePosterData> {
         return this.restApiService.get(RestConfig.REST_FILES_API_HOST, '/sale/posters/' + saleId);
     }
 
-    deletePosterOfSale( saleId: string): Observable<SalePosterData> {
+    deletePosterOfSale( saleId: number): Observable<SalePosterData> {
         return this.restApiService.delete(RestConfig.REST_FILES_API_HOST, '/sale/posters/' + saleId);
     }
 }

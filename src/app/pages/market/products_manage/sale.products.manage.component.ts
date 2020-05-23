@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaleProduct, Sale, ProductPictureData } from '../_models';
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 import { RestConfig } from '../../../common/services/rest/rest.config';
-import { SaleProductService, MenuService, SaleService, ProductPictureService } from '../_service';
+import { SaleProductService, MarketMenuService, SaleService, ProductPictureService } from '../_service';
 import { OverlayPanel } from 'primeng/overlaypanel/public_api';
 import { ErrorCode } from 'src/app/common';
 import { Observable, from, pipe } from 'rxjs';
@@ -37,7 +37,7 @@ export class SaleProductsManageComponent implements OnInit {
   constructor(private saleService: SaleService,
     private saleProductService: SaleProductService,
     private productPictureService: ProductPictureService,
-    private menuService: MenuService,
+    private menuService: MarketMenuService,
     private loadingPageService: LoadingPageService,
     private route: ActivatedRoute,
     private router: Router) {

@@ -24,7 +24,7 @@ export class PosterUploadComponent implements OnInit {
   isHavePoster = false;
   currentSale: Sale;
   uploadedFiles: any[] = [];
-  fetchSaleId: string;
+  fetchSaleId: number;
   display = false;
   constructor(private saleService: SaleService, private salePosterService: SalePosterService,
               private route: ActivatedRoute, private router: Router, private loadingPageService: LoadingPageService) {
@@ -83,7 +83,7 @@ export class PosterUploadComponent implements OnInit {
     );
   }
 
-  deletePosterOfSale(saleId: string) {
+  deletePosterOfSale(saleId: number) {
     return this.salePosterService.deletePosterOfSale(saleId).pipe(
       take(1),
       switchMap(deletedPoster => {

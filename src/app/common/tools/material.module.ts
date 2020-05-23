@@ -22,7 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import {CardModule} from 'primeng/card';
-
+import {GalleriaModule} from 'primeng/galleria';
 const PRIME_THEME_COMPONENTS = [
   TabViewModule,
   CalendarModule,
@@ -45,6 +45,7 @@ const PRIME_THEME_COMPONENTS = [
   ToolbarModule,
   KeyFilterModule,
   CardModule,
+  GalleriaModule
 ];
 
 @NgModule({

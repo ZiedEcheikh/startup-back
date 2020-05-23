@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestConfig } from '../../../../common/services/rest/rest.config';
-import { MenuService, ProductPictureService, SaleProductService } from '../../_service';
+import { MarketMenuService, ProductPictureService, SaleProductService } from '../../_service';
 import { MenuItem } from 'primeng/api/menuitem';
 import { Observable } from 'rxjs';
 import { ProductPictureData, SaleProduct, ProductPictureRank } from '../../_models';
@@ -33,8 +33,8 @@ export class ProductPicturesComponent implements OnInit {
         private productPictureService: ProductPictureService,
         private route: ActivatedRoute,
         private router: Router,
-        private menuService: MenuService) {
-        this.stepsItems = this.menuService.getItemsNewSaleSteps();
+        private marketMenuService: MarketMenuService) {
+        this.stepsItems = this.marketMenuService.getItemsNewSaleSteps();
     }
 
     ngOnInit(): void {

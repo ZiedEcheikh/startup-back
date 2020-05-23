@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
-import { SaleService, SaleDetailsService, MenuService } from '../_service';
+import { SaleService, SaleDetailsService, MarketMenuService } from '../_service';
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 import { NodeTreeSaleDetails, Sale } from '../_models';
 import { ErrorCode } from 'src/app/common';
@@ -21,8 +21,12 @@ export class SaleDetailsComponent implements OnInit {
   treeSaleDetails: NodeTreeSaleDetails[];
   selectedDetail: NodeTreeSaleDetails;
   fetchSaleId: string;
-  constructor(private saleService: SaleService, private saleDetailsService: SaleDetailsService, private router: Router,
-    private route: ActivatedRoute, private menuService: MenuService, private loadingPageService: LoadingPageService) {
+  constructor(private saleService: SaleService,
+              private saleDetailsService: SaleDetailsService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private marketMenuService: MarketMenuService,
+              private loadingPageService: LoadingPageService) {
     this.items = [
       { label: 'Vente' },
       { label: 'Affiche' },
@@ -75,7 +79,7 @@ export class SaleDetailsComponent implements OnInit {
     // this.router.navigateByUrl('administrator/market/sale-manage/' + this.selectedDetail.id);
   }
   contextMenu(event: any) {
-  this.menus = this.menuService.getItemTreeMenu(event, Number(this.fetchSaleId));
+  this.menus = this.marketMenuService.getItemTreeMenu(event, Number(this.fetchSaleId));
   }
 
   goNext() {
