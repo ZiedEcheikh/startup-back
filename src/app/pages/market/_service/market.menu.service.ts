@@ -21,7 +21,7 @@ export class MarketMenuService {
           ];
     }
 
-    getItemTreeMenu(node: NodeTreeSaleDetails, saleId: number) {
+    getItemsTreeSaleDetailsMenu(node: NodeTreeSaleDetails, saleId: number) {
 
         if (node.detailsProducts) {
             return this.getItemsShowProducts(node, saleId);

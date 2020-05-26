@@ -8,3 +8,4 @@ export * from './sale.model';
 export * from './product.criteria.model';
 export * from './product.choice.criteria.model';
 export * from './product.picture.rank.model';
+export * from './sale.details.model';

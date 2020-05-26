@@ -1,0 +1,367 @@
+<div class="p-grid ui-fluid">
+  <div class="p-col-12 p-lg-12">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card card-w-title">
+          <h1 class="titel-steps">Nouvelle vente privée</h1>
+          <div class="p-grid ui-fluid">
+            <div class="p-col-2"></div>
+            <div class="p-col-8">
+              <p-steps [model]="itemsStepsMenu" [activeIndex]="2"></p-steps>
+            </div>
+            <div class="p-col-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-contextMenu [global]="true" [model]="itemsContextMenu"></p-contextMenu>
+<div class="ui-g">
+  <div class="ui-g-12">
+    <p-card styleClass="ui-card-shadow">
+      <h4>{{ currrentProduct?.label }}</h4>
+    </p-card>
+  </div>
+</div>
+<div class="ui-g" #cirterion>
+  <div *ngFor="let cirteria of currentCriterion" class="ui-g-6">
+    <p-card styleClass="ui-card-shadow">
+      <div
+        *ngIf="cirteria.canBechoicePriority && cirteria.choiceCriterion != null"
+        class="form-group block-marge"
+        style="position: relative; float: right; margin-bottom: 10px;"
+      >
+        <p-checkbox
+          [disabled]="!cirteria.editable"
+          (onChange)="updateOtherCriteria()"
+          [(ngModel)]="cirteria.choicePriority"
+          label="Critére de choix"
+          binary="true"
+        ></p-checkbox>
+      </div>
+      <div class="form-group block-marge">
+        <h3>Libellé*:</h3>
+        <input
+          type="text"
+          [disabled]="!cirteria.editable"
+          pInputText
+          placeholder="Libellé *"
+          autocomplete="off"
+          [(ngModel)]="cirteria.label"
+          name="label"
+          required
+          #labelCtrl="ngModel"
+          style="width: 100%;"
+        />
+        <p-message
+          *ngIf="labelCtrl.touched && cirteria.label.length == 0"
+          severity="error"
+          text="Libellé obligatoire"
+        >
+        </p-message>
+      </div>
+
+      <div class="form-group block-marge">
+        <h3>Description:</h3>
+        <textarea
+          [rows]="3"
+          [cols]="30"
+          [disabled]="!cirteria.editable"
+          style="width: 100%;"
+          pInputTextarea
+          placeholder="Descritption"
+          autoResize="autoResize"
+          [(ngModel)]="cirteria.description"
+          name="description"
+          #descriptionCtrl="ngModel"
+        ></textarea>
+      </div>
+
+      <div
+        *ngIf="cirteria.choiceCriterion != null"
+        class="form-group block-marge"
+      >
+        <p-table
+          [columns]="colsTableColsChoiceCriterai"
+          [value]="cirteria.choiceCriterion"
+          dataKey="label"
+          [style]="{ width: '500px' }"
+        >
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+              <th style="width: 8em; text-align: center;">
+                <button
+                  pButton
+                  [disabled]="!cirteria.editable"
+                  (click)="addChoice(cirteria.choiceCriterion)"
+                  type="button"
+                  icon="pi pi-plus"
+                ></button>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngIf="!rowData.editable">{{ rowData.label }}</td>
+              <td *ngIf="rowData.editable">
+                <textarea
+                  [rows]="3"
+                  [cols]="11"
+                  pInputTextarea
+                  autoResize="autoResize"
+                  [(ngModel)]="rowData.label"
+                  name="label"
+                  required
+                  #labelCtrl="ngModel"
+                ></textarea>
+                <p-message
+                  *ngIf="!labelCtrl.valid && labelCtrl.touched"
+                  severity="error"
+                  text="Libellé obligatoire"
+                >
+                </p-message>
+              </td>
+
+              <td *ngIf="!rowData.editable">{{ rowData.description }}</td>
+              <td *ngIf="rowData.editable">
+                <textarea
+                  [rows]="3"
+                  [cols]="11"
+                  pInputTextarea
+                  autoResize="autoResize"
+                  [(ngModel)]="rowData.description"
+                  name="description"
+                  #descriptionCtrl="ngModel"
+                ></textarea>
+              </td>
+
+              <td *ngIf="!rowData.editable">{{ rowData.quantity }}</td>
+              <td *ngIf="rowData.editable">
+                <input
+                  type="text"
+                  pInputText
+                  style="width: 100%;"
+                  pKeyFilter="num"
+                  [(ngModel)]="rowData.quantity"
+                  name="quantity"
+                  #quantityCtrl="ngModel"
+                />
+              </td>
+              <td>
+                <button
+                  *ngIf="!rowData.actionEdit && !rowData.actionStore"
+                  [disabled]="!cirteria.editable"
+                  pButton
+                  type="button"
+                  class="ui-button-warning"
+                  (click)="enableEditModeChoiceCriteria(rowData)"
+                  icon="pi pi-pencil"
+                  style="margin-right: 0.5em;"
+                ></button>
+                <button
+                  *ngIf="!rowData.actionEdit && !rowData.actionStore"
+                  [disabled]="!cirteria.editable"
+                  pButton
+                  type="button"
+                  class="ui-button-danger"
+                  (click)="
+                    confirmDeleteChoiceCriteria(
+                      cirteria.choiceCriterion,
+                      rowData
+                    )
+                  "
+                  icon="pi pi-trash"
+                ></button>
+
+                <button
+                  *ngIf="rowData.actionEdit"
+                  [disabled]="rowData.label.length == 0"
+                  pButton
+                  type="button"
+                  class="ui-button-success"
+                  (click)="confirmUpdateChoiceCriteria(rowData, cirteria)"
+                  icon="pi pi-refresh"
+                  style="margin-right: 0.5em;"
+                ></button>
+                <button
+                  *ngIf="rowData.actionEdit"
+                  [disabled]="rowData.label.length == 0"
+                  pButton
+                  type="button"
+                  class="ui-button-danger"
+                  (click)="disabelEditModeChoiceCriteria(rowData)"
+                  icon="pi pi-times"
+                ></button>
+
+                <button
+                  *ngIf="rowData.actionStore"
+                  [disabled]="rowData.label.length == 0"
+                  pButton
+                  type="button"
+                  class="ui-button-success"
+                  (click)="confirmStoreChoiceCriteria(rowData, cirteria)"
+                  icon="pi pi-save"
+                  style="margin-right: 0.5em;"
+                ></button>
+                <button
+                  *ngIf="rowData.actionStore"
+                  pButton
+                  type="button"
+                  class="ui-button-danger"
+                  (click)="
+                    ignoreStoreChoiceCriteria(rowData, cirteria.choiceCriterion)
+                  "
+                  icon="pi pi-times"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <p-footer>
+        <button
+          *ngIf="!cirteria.actionEdit && !cirteria.actionStore"
+          pButton
+          type="button"
+          class="ui-button-warning"
+          (click)="enableEditModeCriteria(cirteria)"
+          icon="pi pi-pencil"
+          style="margin-right: 0.5em;"
+        ></button>
+        <button
+          *ngIf="!cirteria.actionEdit && !cirteria.actionStore"
+          pButton
+          type="button"
+          class="ui-button-danger"
+          (click)="confirmDeleteCriteria(cirteria)"
+          icon="pi pi-trash"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          class="ui-button-success"
+          *ngIf="cirteria.actionEdit"
+          (click)="confirmUpdateCriteria(cirteria)"
+          icon="pi pi-refresh"
+          style="margin-right: 0.5em;"
+        ></button>
+        <button
+          *ngIf="cirteria.actionEdit"
+          pButton
+          type="button"
+          class="ui-button-danger"
+          (click)="disabelEditModeCriteria(cirteria)"
+          icon="pi pi-times"
+        ></button>
+
+        <button
+          *ngIf="cirteria.actionStore"
+          pButton
+          type="button"
+          class="ui-button-success"
+          (click)="confirmStoreCriteria(cirteria)"
+          icon="pi pi-save"
+          style="margin-right: 0.5em;"
+        ></button>
+        <button
+          *ngIf="cirteria.actionStore"
+          pButton
+          type="button"
+          class="ui-button-danger"
+          (click)="ignoreStoreCriteria(cirteria)"
+          icon="pi pi-times"
+        ></button>
+      </p-footer>
+    </p-card>
+  </div>
+</div>
+
+<div class="p-grid ui-fluid">
+  <div class="p-col-12 p-lg-12">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card">
+          <div class="p-grid form-group">
+            <div class="p-col-3 p-md-3"></div>
+
+            <div class="p-col-6 p-md-6">
+              <button
+                type="button"
+                (click)="goProductsManage()"
+                label="Valider"
+                pButton
+              ></button>
+            </div>
+
+            <div class="p-col-3 p-md-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Confirmation"
+  [(visible)]="display"
+  modal="true"
+  showEffect="fade"
+  [style]="{ width: '400px' }"
+>
+  <p style="margin-top: 1em; margin-bottom: 1em;">
+    Voulez-vous supprimer le critére ?
+  </p>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="onDeleteCriteria()"
+      label="Oui"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="display = false"
+      label="Non"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header="Confirmation"
+  [(visible)]="displayChoice"
+  modal="true"
+  showEffect="fade"
+  [style]="{ width: '400px' }"
+>
+  <p style="margin-top: 1em; margin-bottom: 1em;">
+    Voulez-vous supprimer le critére ?
+  </p>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="onDeleteChoieCriteria()"
+      label="Oui"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="displayChoice = false"
+      label="Non"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>

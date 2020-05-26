@@ -52,21 +52,11 @@ export class SaleProductService {
         return this.restApiService.delete(RestConfig.REST_MANAGE_API_HOST, '/products/' + productId);
     }
 
-    getProductsOfSale(saleId: number): Observable<SaleProduct> {
+    getProductsOfSale(saleId: number): Observable<SaleProduct[]> {
         return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/products/sale/' + saleId);
     }
 
     getProductsOfSaleDetails(saleDetailsId: number) {
         return this.restApiService.get(RestConfig.REST_MANAGE_API_HOST, '/products/sale/details/' + saleDetailsId);
     }
-
-    getPicturesOfProduct(productId: number) {
-    }
-
-    addProductPicture() {
-    }
-
-    disablePictureOfProduct(productId: number) {
-    }
-
 }

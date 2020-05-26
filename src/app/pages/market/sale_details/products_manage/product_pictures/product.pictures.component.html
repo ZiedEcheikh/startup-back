@@ -8,7 +8,7 @@
             <div class="p-col-2">
             </div>
             <div class="p-col-8">
-              <p-steps [model]="stepsItems" [activeIndex]="2"></p-steps>
+              <p-steps [model]="itemsStepsMenu" [activeIndex]="2"></p-steps>
             </div>
             <div class="p-col-2">
             </div>
@@ -26,7 +26,7 @@
     <div class="p-grid">
       <div class="p-col-12">
         <div class="card card-w-title">
-          <h1>Les images</h1>
+          <h1>{{currrentProduct?.label}}</h1>
 
           <div class="p-grid form-group block-marge">
             <div class="p-col-2 p-md-2">

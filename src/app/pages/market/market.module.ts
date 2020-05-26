@@ -7,32 +7,40 @@ import { MaterialModule } from '../../common/tools/material.module';
 import { MarketRoutingModule } from './market.routing.module';
 
 import { MarketComponent } from './market.component';
-import { SaleAddComponent } from './sale/sale.add.component';
-import { PosterUploadComponent } from './poster/poster.upload.component';
-import { SaleDetailsComponent } from './details/sale.details.component';
-import { SaleRecapComponent } from './recap/sale.recap.component';
-import { SaleDetailsManageComponent } from './details_manage/sale.details.manage.component';
-import { SaleProductsManageComponent } from './products_manage/sale.products.manage.component';
-import { ProductCriteriaComponent } from './products_manage/product_criterion/product.criteria.component';
-import { ProductPicturesComponent } from './products_manage/product_pictures/product.pictures.component';
+import { SaleAddComponent } from './sale_add/sale.add.component';
+import { SalePosterComponent } from './sale_poster/sale.poster.component';
+import { SaleDetailsComponent } from './sale_details/sale.details.component';
+import { SaleRecapComponent } from './sale_recap/sale.recap.component';
+import { SaleDetailsGroupsManageComponent } from './sale_details/groups_manage/sale.details.groups.manage.component';
+import { SaleDetailsProductsManageComponent } from './sale_details/products_manage/sale.details.products.manage.component';
+import { ProductCriteriaComponent } from './sale_details/products_manage/product_criterion/product.criteria.component';
+import { ProductPicturesComponent } from './sale_details/products_manage/product_pictures/product.pictures.component';
 import { CustomDatePipe } from '../../common/pipes/custom.date.pipe';
 /*Services*/
 import {
-  SaleService, SaleDetailsService, SaleProductService,
-  SalePosterService, ProductCriteriaService, ProductPictureService, MarketMenuService
+  SaleService,
+  SaleDetailsService,
+  SaleProductService,
+  SalePosterService,
+  ProductCriteriaService,
+  ProductPictureService,
+  MarketMenuService,
 } from './_service';
 
 @NgModule({
-  declarations: [MarketComponent, SaleAddComponent, PosterUploadComponent,
-    SaleDetailsComponent, SaleRecapComponent,
-    SaleDetailsManageComponent, SaleProductsManageComponent,
-    ProductCriteriaComponent, ProductPicturesComponent, CustomDatePipe],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MarketRoutingModule,
-    MaterialModule
+  declarations: [
+    MarketComponent,
+    SaleAddComponent,
+    SalePosterComponent,
+    SaleDetailsComponent,
+    SaleRecapComponent,
+    SaleDetailsGroupsManageComponent,
+    SaleDetailsProductsManageComponent,
+    ProductCriteriaComponent,
+    ProductPicturesComponent,
+    CustomDatePipe,
   ],
+  imports: [CommonModule, FormsModule, MarketRoutingModule, MaterialModule],
   providers: [
     SaleService,
     SaleDetailsService,
@@ -40,7 +48,7 @@ import {
     SalePosterService,
     ProductCriteriaService,
     ProductPictureService,
-    MarketMenuService
-  ]
+    MarketMenuService,
+  ],
 })
-export class MarketModule { }
+export class MarketModule {}

@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable, ReplaySubject } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 
 @Injectable()
 export class BreadcrumbService {
+  private crumbs: ReplaySubject<MenuItem[]>; // <-- Change to ReplaySubject
+  crumbs$: Observable<MenuItem[]>;
 
-    private itemsSource = new Subject<MenuItem[]>();
+  constructor() {
+    this.crumbs = new ReplaySubject<MenuItem[]>();
+    this.crumbs$ = this.crumbs.asObservable();
+  }
 
-    itemsHandler = this.itemsSource.asObservable();
-
-    setItems(items: MenuItem[]) {
-        this.itemsSource.next(items);
-    }
+  setCrumbs(items: MenuItem[]) {
+    this.crumbs.next(
+      (items || []).map(item =>
+          Object.assign({}, item, {
+            routerLinkActiveOptions: { exact: true }
+          })
+        )
+    );
+  }
 }

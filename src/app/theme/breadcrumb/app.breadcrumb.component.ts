@@ -14,7 +14,7 @@ export class AppBreadcrumbComponent implements OnDestroy {
     items: MenuItem[];
 
     constructor(public breadcrumbService: BreadcrumbService) {
-        this.subscription = breadcrumbService.itemsHandler.subscribe(response => {
+        this.subscription = breadcrumbService.crumbs$.subscribe(response => {
             this.items = response;
         });
     }
