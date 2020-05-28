@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, switchMap, tap } from 'rxjs/operators';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import {
   MarketMenuService,
   SaleService,
@@ -11,6 +11,7 @@ import {
 import { LoadingPageService } from '../../../theme/loading/page/app.loading.page.service';
 import { RestConfig } from '../../../common/services/rest/rest.config';
 import { Sale, SalePosterData, NodeTreeSaleDetails } from '../_models';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-sale-recap',
   templateUrl: './sale.recap.component.html',
@@ -28,6 +29,7 @@ export class SaleRecapComponent implements OnInit {
     private salePosterService: SalePosterService,
     private loadingPageService: LoadingPageService,
     private marketMenuService: MarketMenuService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -79,6 +81,28 @@ export class SaleRecapComponent implements OnInit {
       queryParams: { saleId: this.fetchSaleId },
     });
   }
+
   validateSale() {
+    let saleObs: Observable<Sale>;
+    saleObs = this.saleService.validateSale(this.currentSale);
+    saleObs.subscribe(
+      (restData) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service market',
+          detail: `La vent ${restData.label} est validé`,
+          life: 6000
+        });
+      },
+      (errRes) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Service market',
+          detail: `Probléme de validation de la vente ${ this.currentSale.label}`,
+          life: 6000
+        });
+       }
+    );
   }
+
 }

@@ -59,4 +59,11 @@ export class SaleService {
             '/sales/' + saleId
         );
     }
+
+    validateSale(sale: Sale): Observable<Sale> {
+        return this.restApiService.put(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/validate', sale
+        );
+    }
 }
