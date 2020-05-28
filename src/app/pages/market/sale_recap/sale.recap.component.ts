@@ -93,6 +93,9 @@ export class SaleRecapComponent implements OnInit {
           detail: `La vent ${restData.label} est validé`,
           life: 6000
         });
+        this.router.navigate(['/administrator/market/sales-consult'], {
+          queryParams: { saleId: this.fetchSaleId },
+        });
       },
       (errRes) => {
         this.messageService.add({

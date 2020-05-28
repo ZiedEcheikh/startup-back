@@ -1,0 +1,15 @@
+::ng-deep .splash-screen-mini {
+    width: 100%;
+    min-height: 40vh;
+    background-color: #F4F7F7;
+}
+
+::ng-deep .spinner-mini {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    z-index: 1;
+    height: 40px;
+    width: 40px;
+    transform: translate(-50%, -50%);
+}

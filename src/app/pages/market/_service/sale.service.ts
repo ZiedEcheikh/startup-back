@@ -66,4 +66,38 @@ export class SaleService {
             '/sales/validate', sale
         );
     }
+
+    getSalesInProgress(): Observable<Sale[]> {
+        return this.restApiService.get(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/progress'
+        );
+    }
+
+    getSalesComeUp(): Observable<Sale[]> {
+        return this.restApiService.get(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/comeup'
+        );
+    }
+
+    getSalesOver(): Observable<Sale[]> {
+        return this.restApiService.get(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/over'
+        );
+    }
+
+    getSalesDisable(): Observable<Sale[]> {
+        return this.restApiService.get(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/disable'
+        );
+    }
+    getSalesDraft(): Observable<Sale[]> {
+        return this.restApiService.get(
+            RestConfig.REST_MANAGE_API_HOST,
+            '/sales/draft'
+        );
+    }
 }

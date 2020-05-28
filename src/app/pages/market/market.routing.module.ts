@@ -10,12 +10,14 @@ import { SaleDetailsGroupsManageComponent } from './sale_details/groups_manage/s
 import { SaleDetailsProductsManageComponent } from './sale_details/products_manage/sale.details.products.manage.component';
 import { ProductCriteriaComponent } from './sale_details/products_manage/product_criterion/product.criteria.component';
 import { ProductPicturesComponent } from './sale_details/products_manage/product_pictures/product.pictures.component';
+import { SaleConsultComponent } from './sale_consult/sale.consult.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MarketComponent,
     children: [
+      { path: 'sales-consult', component: SaleConsultComponent },
       { path: 'sale-add', component: SaleAddComponent },
       { path: 'poster-upload', component: SalePosterComponent },
       { path: 'sale-details', component: SaleDetailsComponent },

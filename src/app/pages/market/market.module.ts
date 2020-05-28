@@ -7,6 +7,7 @@ import { MaterialModule } from '../../common/tools/material.module';
 import { MarketRoutingModule } from './market.routing.module';
 
 import { MarketComponent } from './market.component';
+import { SaleConsultComponent } from './sale_consult/sale.consult.component';
 import { SaleAddComponent } from './sale_add/sale.add.component';
 import { SalePosterComponent } from './sale_poster/sale.poster.component';
 import { SaleDetailsComponent } from './sale_details/sale.details.component';
@@ -16,6 +17,7 @@ import { SaleDetailsProductsManageComponent } from './sale_details/products_mana
 import { ProductCriteriaComponent } from './sale_details/products_manage/product_criterion/product.criteria.component';
 import { ProductPicturesComponent } from './sale_details/products_manage/product_pictures/product.pictures.component';
 import { CustomDatePipe } from '../../common/pipes/custom.date.pipe';
+import { PanelLoadingComponent } from '../../theme/loading/panel/panel.loading.component';
 /*Services*/
 import {
   SaleService,
@@ -30,6 +32,7 @@ import {
 @NgModule({
   declarations: [
     MarketComponent,
+    SaleConsultComponent,
     SaleAddComponent,
     SalePosterComponent,
     SaleDetailsComponent,
@@ -39,6 +42,7 @@ import {
     ProductCriteriaComponent,
     ProductPicturesComponent,
     CustomDatePipe,
+    PanelLoadingComponent
   ],
   imports: [CommonModule, FormsModule, MarketRoutingModule, MaterialModule],
   providers: [
@@ -51,4 +55,4 @@ import {
     MarketMenuService,
   ],
 })
-export class MarketModule {}
+export class MarketModule { }

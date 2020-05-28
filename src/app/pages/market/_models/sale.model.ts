@@ -1,6 +1,7 @@
 import { SaleCategory } from './sale.category.model';
 import { SaleSubCategory } from './sale.sub.category.model';
 import { SaleDetails } from './sale.details.model';
+import { SalePosterData } from './sale.poster.data.model';
 
 export class Sale  {
     id?: number;
@@ -14,6 +15,7 @@ export class Sale  {
     draft: boolean;
     userId: string;
     details?: SaleDetails[];
+    poster?: SalePosterData;
     public constructor() {
     }
 

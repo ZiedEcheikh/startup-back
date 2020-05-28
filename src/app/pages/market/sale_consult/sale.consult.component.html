@@ -1,0 +1,439 @@
+<div class="p-grid ui-fluid">
+  <div class="p-col-12 p-lg-12">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card">
+          <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12">
+              <p-panel header="Les ventes en cours" [toggleable]="true" (onBeforeToggle)="onSalesInProgress($event)"
+                [collapsed]="true">
+                <app-panel-loading *ngIf="loadingInProgress"></app-panel-loading>
+                <p-table *ngIf="!loadingInProgress" #dt [columns]="colsSales" styleClass="ui-table-cars"
+                  [value]="salesInProgress" [paginator]="true" [rows]="5" dataKey="label" selectionMode="single">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: 0.5em;">
+                        <input *ngSwitchCase="'label'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'description'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'beginDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'endDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                      <td (click)="op1.toggle($event)">
+                        {{ rowData.label }}
+                        <p-overlayPanel appendTo="body" #op1>
+                          <img [src]="rowData.poster.source" width="442" height="182" style="z-index: 10000000;" />
+                        </p-overlayPanel>
+                      </td>
+
+                      <td>
+                        {{ rowData.description }}
+                      </td>
+
+                      <td>
+                        {{ rowData.beginDate | customDate }}
+                      </td>
+
+                      <td>
+                        {{ rowData.endDate | customDate }}
+                      </td>
+                      <td>
+                        <button pButton type="button" class="ui-button-suceess" (click)="goSale(rowData)"
+                          icon="pi pi-search" style="margin-right: 0.5em;"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-panel>
+            </div>
+          </div>
+
+          <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12">
+              <p-panel header="Les ventes à venir" (onBeforeToggle)="onSalesComeUp($event)" [toggleable]="true"
+                [collapsed]="true">
+                <app-panel-loading *ngIf="loadingComeUp"></app-panel-loading>
+                <p-table *ngIf="!loadingComeUp" #dt [columns]="colsSales" styleClass="ui-table-cars"
+                  [value]="salesCommeUp" [paginator]="true" [rows]="5" dataKey="label" selectionMode="single">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: 0.5em;">
+                        <input *ngSwitchCase="'label'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'description'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'beginDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'endDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                      <td (click)="op1.toggle($event)">
+                        {{ rowData.label }}
+                        <p-overlayPanel appendTo="body" #op1>
+                          <img [src]="rowData.poster.source" width="442" height="182" style="z-index: 10000000;" />
+                        </p-overlayPanel>
+                      </td>
+
+                      <td>
+                        {{ rowData.description }}
+                      </td>
+
+                      <td>
+                        {{ rowData.beginDate | customDate }}
+                      </td>
+
+                      <td>
+                        {{ rowData.endDate | customDate }}
+                      </td>
+                      <td>
+                        <button pButton type="button" class="ui-button-suceess" (click)="goSale(rowData)"
+                          icon="pi pi-search" style="margin-right: 0.5em;"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-panel>
+            </div>
+          </div>
+
+          <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12">
+              <p-panel header="Les ventes terminées" (onBeforeToggle)="onSalesOver($event)" [toggleable]="true"
+                [collapsed]="true">
+                <app-panel-loading *ngIf="loadingOver"></app-panel-loading>
+                <p-table *ngIf="!loadingOver" #dt [columns]="colsSales" styleClass="ui-table-cars" [value]="salesOver"
+                  [paginator]="true" [rows]="5" dataKey="label" selectionMode="single">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: 0.5em;">
+                        <input *ngSwitchCase="'label'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'description'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'beginDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'endDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                      <td (click)="op1.toggle($event)">
+                        {{ rowData.label }}
+                        <p-overlayPanel appendTo="body" #op1>
+                          <img [src]="rowData.poster.source" width="442" height="182" style="z-index: 10000000;" />
+                        </p-overlayPanel>
+                      </td>
+
+                      <td>
+                        {{ rowData.description }}
+                      </td>
+
+                      <td>
+                        {{ rowData.beginDate | customDate }}
+                      </td>
+
+                      <td>
+                        {{ rowData.endDate | customDate }}
+                      </td>
+                      <td>
+                        <button pButton type="button" class="ui-button-suceess" (click)="goSale(rowData)"
+                          icon="pi pi-search" style="margin-right: 0.5em;"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-panel>
+            </div>
+          </div>
+
+          <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12">
+              <p-panel header="Les ventes désactivées" (onBeforeToggle)="onSalesDisable($event)" [toggleable]="true"
+                [collapsed]="true">
+                <app-panel-loading *ngIf="loadingDisable"></app-panel-loading>
+                <p-table *ngIf="!loadingDisable" #dt [columns]="colsSales" styleClass="ui-table-cars"
+                  [value]="salesDisable" [paginator]="true" [rows]="5" dataKey="label" selectionMode="single">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: 0.5em;">
+                        <input *ngSwitchCase="'label'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'description'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'beginDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'endDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                      <td (click)="op1.toggle($event)">
+                        {{ rowData.label }}
+                        <p-overlayPanel appendTo="body" #op1>
+                          <img [src]="rowData.poster.source" width="442" height="182" style="z-index: 10000000;" />
+                        </p-overlayPanel>
+                      </td>
+
+                      <td>
+                        {{ rowData.description }}
+                      </td>
+
+                      <td>
+                        {{ rowData.beginDate | customDate }}
+                      </td>
+
+                      <td>
+                        {{ rowData.endDate | customDate }}
+                      </td>
+                      <td>
+                        <button pButton type="button" class="ui-button-suceess" (click)="goSale(rowData)"
+                          icon="pi pi-search" style="margin-right: 0.5em;"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-panel>
+            </div>
+          </div>
+
+          <div class="p-grid form-group">
+            <div class="p-col-12 p-md-12">
+              <p-panel header="Les ventes brouillons" (onBeforeToggle)="onSalesDraft($event)" [toggleable]="true"
+                [collapsed]="true">
+                <app-panel-loading *ngIf="loadingDraft"></app-panel-loading>
+                <p-table *ngIf="!loadingDraft" #dt [columns]="colsSales" styleClass="ui-table-cars" [value]="salesDraft"
+                  [paginator]="true" [rows]="5" dataKey="label" selectionMode="single">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: 0.5em;">
+                        <input *ngSwitchCase="'label'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'description'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'beginDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                        <input *ngSwitchCase="'endDate'" pInputText type="text" class="ui-column-filter"
+                          style="width: 100%; margin-top: 0;" (input)="
+                            dt.filter(
+                              $event.target.value,
+                              col.field,
+                              'contains'
+                            )
+                          " />
+                      </th>
+                      <th style="width: 6em;"></th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                      <td (click)="op1.toggle($event)">
+                        {{ rowData.label }}
+                        <p-overlayPanel appendTo="body" #op1>
+                          <img [src]="rowData.poster.source" width="442" height="182" style="z-index: 10000000;" />
+                        </p-overlayPanel>
+                      </td>
+
+                      <td>
+                        {{ rowData.description }}
+                      </td>
+
+                      <td>
+                        {{ rowData.beginDate | customDate }}
+                      </td>
+
+                      <td>
+                        {{ rowData.endDate | customDate }}
+                      </td>
+                      <td>
+                        <button pButton type="button" class="ui-button-suceess" (click)="goSale(rowData)"
+                          icon="pi pi-search" style="margin-right: 0.5em;"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-panel>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

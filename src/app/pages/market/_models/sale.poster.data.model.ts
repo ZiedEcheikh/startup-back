@@ -1,5 +1,5 @@
 export interface SalePosterData {
-    saleId?: string;
+    saleId?: number;
     userId?: string;
     pictureName?: string;
     picturePath?: string;
