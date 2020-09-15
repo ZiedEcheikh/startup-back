@@ -20,4 +20,6 @@ export const routes: Routes = [
     {path: 'notfound', component: AppNotfoundComponent},
 ];
 
-export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'});
+export const AppRoutes:
+ModuleWithProviders<RouterModule> =
+RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})as ModuleWithProviders<RouterModule>;

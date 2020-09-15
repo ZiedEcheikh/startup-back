@@ -17,13 +17,13 @@ const START_UP_SERVICES = [
   ]
 })
 export class ServicesModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<ServicesModule> {
     return {
       ngModule: ServicesModule,
       providers: [
         ...START_UP_SERVICES,
         { provide: HTTP_INTERCEPTORS, useClass: AuthHelpers, multi: true },
       ],
-    } as ModuleWithProviders;
+    } as ModuleWithProviders<ServicesModule>;
   }
 }
