@@ -22,4 +22,4 @@ export const routes: Routes = [
 
 export const AppRoutes:
 ModuleWithProviders<RouterModule> =
-RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})as ModuleWithProviders<RouterModule>;
+RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', relativeLinkResolution: 'legacy' })as ModuleWithProviders<RouterModule>;
